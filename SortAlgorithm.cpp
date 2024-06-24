@@ -56,3 +56,768 @@ void BubbleSortTime(int* arr, int N, chrono::milliseconds& time)
 	// calculate duration
 	time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 }
+
+
+// Merge two arrays in asscending order
+void MergeComparison(int arr[], int l, int m, int r, long long& count_assign, long long& count_compare)
+{
+	int n1 = m - l + 1; count_assign++; // get size of arr1
+	int n2 = r - m; count_assign++; // get size of arr2
+	int* arr1 = new int[n1];
+	int* arr2 = new int[n2];
+	for (int i = l; ++count_compare && i <= m; i++)
+	{
+		count_assign++;
+		arr1[i - l] = arr[i]; count_assign++; // Assign arr1 array
+	}
+	for (int i = m + 1; ++count_compare && i <= r; i++)
+	{
+		count_assign++;
+		arr2[i - m - 1] = arr[i]; count_assign++; // Assign arr2 array
+	}
+	int idx1 = 0; count_assign++;
+	int idx2 = 0; count_assign++;
+
+	// Merge two arrays in asscending order
+	while (++count_compare && idx1 < n1 && ++count_compare && idx2 < n2)
+	{
+		if (++count_compare && arr1[idx1] <= arr2[idx2])
+		{
+			arr[l] = arr1[idx1]; count_assign++;
+			idx1++; count_assign++;
+			l++; count_assign++;
+		}
+		else
+		{
+			arr[l] = arr2[idx2]; count_assign++;
+			idx2++; count_assign++;
+			l++; count_assign++;
+		}
+	}
+	while (++count_compare && idx1 < n1)
+	{
+		arr[l] = arr1[idx1]; count_assign++;
+		l++; count_assign++;
+		idx1++; count_assign++;
+	}
+	while (++count_compare && idx2 < n2)
+	{
+		arr[l] = arr2[idx2]; count_assign++;
+		l++; count_assign++;
+		idx2++; count_assign++;
+	}
+	delete[] arr1;
+	delete[] arr2;
+}
+
+//  Merge two arrays in asscending order
+void Merge(int arr[], int l, int m, int r)
+{
+	int n1 = m - l + 1;// get size of arr1
+	int n2 = r - m;// get size of arr2
+	int* arr1 = new int[n1];
+	int* arr2 = new int[n2];
+	for (int i = l; i <= m; i++)
+	{
+		arr1[i - l] = arr[i]; // Assign arr1 array
+	}
+	for (int i = m + 1; i <= r; i++)
+	{
+		arr2[i - m - 1] = arr[i]; // Assign arr2 array
+	}
+	int idx1 = 0;
+	int idx2 = 0;
+	// Merge two arrays in asscending order
+	while (idx1 < n1 && idx2 < n2)
+	{
+		if (arr1[idx1] <= arr2[idx2])
+		{
+			arr[l] = arr1[idx1];
+			idx1++;
+			l++;
+		}
+		else
+		{
+			arr[l] = arr2[idx2];
+			idx2++;
+			l++;
+		}
+	}
+	while (idx1 < n1)
+	{
+		arr[l] = arr1[idx1];
+		l++;
+		idx1++;
+	}
+	while (idx2 < n2)
+	{
+		arr[l] = arr2[idx2];
+		l++;
+		idx2++;
+	}
+	delete[] arr1;
+	delete[] arr2;
+}
+
+// Merge sort algorithm
+void MergeSort(int* arr, int l, int r)
+{
+	if (l >= r) return;
+	int m = (l + r) / 2;
+	MergeSort(arr, l, m);
+	MergeSort(arr, m + 1, r);
+	Merge(arr, l, m, r);
+}
+// Merge sort algorithm and count number of comparision
+void Merge_Sort_Comparison(int* arr, int l, int r, long long& count_assign, long long& count_compare)
+{
+	if (++count_compare && l >= r) return;
+	int m = (l + r) / 2; count_assign++;
+	Merge_Sort_Comparison(arr, l, m, count_assign, count_compare);
+	Merge_Sort_Comparison(arr, m + 1, r, count_assign, count_compare);
+	MergeComparison(arr, l, m, r, count_assign, count_compare);
+}
+// Merge sort algorithm and count number of comparision
+void MergeSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
+{
+	count_assign = 0;
+	count_compare = 0;
+	int l = 0; count_assign++;
+	int r = N - 1; count_assign++;
+	Merge_Sort_Comparison(arr, l, r, count_assign, count_compare);
+}
+// Merge sort algorithm and determine execution time 
+void MergeSortTime(int* arr, int N, chrono::milliseconds& time)
+{
+	// get start time
+	auto start = chrono::steady_clock::now();
+
+	// Call MergeSort function
+	MergeSort(arr, 0, N - 1);
+
+	// get end time
+	auto end = chrono::steady_clock::now();
+
+	// calculate duration
+	time = chrono::duration_cast<std::chrono::milliseconds>(end - start);
+}
+
+// get number of digits of integer
+int getNumberOfDigits(int n, long long& count_assign, long long& count_compare)
+{
+	int result = 0; count_assign++;
+	while (++count_compare && n > 0)
+	{
+		result++; count_assign++;
+		n = n / 10; count_assign++;
+	}
+	return result;
+}
+// get number of digits of integer
+int get_Number_Of_Digits(int n)
+{
+	int result = 0;
+	while (n > 0)
+	{
+		result++;
+		n = n / 10;
+	}
+	return result;
+}
+
+// Get digit of n at position k (k in range [1, n] )
+int getDigitAtPositionK(int n, int k, long long& count_assign, long long& count_compare)
+{
+	int numberDigit = getNumberOfDigits(n, count_assign, count_compare); count_assign++;
+	string number = to_string(n); count_compare += numberDigit + 2; count_assign += 2 * numberDigit + 2;
+	if ((++count_compare && k <= 0) || (++count_compare && k > n)) return 0;
+	else
+	{
+		return number[k - 1] - '0';
+	}
+}
+
+// Get digit of n at position k (k in range [1, n] )
+int get_Digit_At_Position_K(int n, int k)
+{
+	int numberDigit = get_Number_Of_Digits(n);
+	string number = to_string(n);
+	if (k <= 0 || k > n) return 0;
+	else
+	{
+		return number[k - 1] - '0';
+	}
+}
+
+// save array from vetor
+void saveArrayFromVector(int* arr, vector<int>* v, int N, long long& count_assign, long long& count_compare)
+{
+	int idx = 0; count_assign++;
+	for (int i = 0; ++count_compare && i <= 9; i++)
+	{
+		count_assign++;
+		if (++count_compare && !v[i].empty())
+		{
+			int n = v[i].size(); count_assign++;
+			while (++count_compare && count_assign++ && n--)
+			{
+				arr[idx] = v[i][v[i].size() - n - 1]; count_assign++;
+				idx++; count_assign++;
+			}
+		}
+		v[i] = vector<int>(); count_assign++;
+	}
+}
+// save array from vetor
+void save_Array_From_Vector(int* arr, vector<int>* v, int N)
+{
+	int idx = 0;
+	for (int i = 0; i <= 9; i++)
+	{
+		if (!v[i].empty())
+		{
+			int n = v[i].size();
+			while (n--)
+			{
+				arr[idx] = v[i][v[i].size() - n - 1];
+				idx++;
+			}
+		}
+		v[i] = vector<int>();
+	}
+}
+// Radix Sort Algorithms
+void RadixSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
+{
+	count_assign = 0;
+	count_compare = 0;
+	vector<int>* save = new vector<int>[10]; count_assign++;
+	int numberDigitMax = getNumberOfDigits(arr[0], count_assign, count_compare);  count_assign++;
+	for (int i = 1; ++count_compare && i < N; i++)
+	{
+		count_assign++;
+		int numberDigitCurr = getNumberOfDigits(arr[i], count_assign, count_compare);  count_assign++;
+		if (++count_compare && numberDigitMax < numberDigitCurr)
+		{
+			numberDigitMax = numberDigitCurr;  count_assign++;
+		}
+	}
+	for (int j = 0; ++count_compare && j < numberDigitMax; j++)
+	{
+		count_assign++;
+		for (int i = 0; ++count_compare && i < N; i++)
+		{
+			count_assign++;
+			int numberDigit = getNumberOfDigits(arr[i], count_assign, count_compare); count_assign++;
+			int digitPos = getDigitAtPositionK(arr[i], numberDigit - j, count_assign, count_compare);  count_assign++;
+			save[digitPos].push_back(arr[i]);
+		}
+		saveArrayFromVector(arr, save, N, count_assign, count_compare);
+	}
+	delete[] save;
+}
+
+// Radix Sort Algorithms
+void RadixSort(int* arr, int N)
+{
+	vector<int>* save = new vector<int>[10];
+	int numberDigitMax = get_Number_Of_Digits(arr[0]);
+	for (int i = 1; i < N; i++)
+	{
+		int numberDigitCurr = get_Number_Of_Digits(arr[i]);
+		if (numberDigitMax < numberDigitCurr)
+		{
+			numberDigitMax = numberDigitCurr;
+		}
+	}
+	for (int j = 0; j < numberDigitMax; j++)
+	{
+		for (int i = 0; i < N; i++)
+		{
+			int numberDigit = get_Number_Of_Digits(arr[i]);
+			int digitPos = get_Digit_At_Position_K(arr[i], numberDigit - j);
+			save[digitPos].push_back(arr[i]);
+		}
+		save_Array_From_Vector(arr, save, N);
+	}
+	delete[] save;
+}
+
+// Radix sort algorithm and determine execution time 
+void RadixSortTime(int* arr, int N, chrono::milliseconds& time)
+{
+	// get start time
+	auto start = chrono::steady_clock::now();
+
+	// Call MergeSort function
+	RadixSort(arr, N);
+
+	// get end time
+	auto end = chrono::steady_clock::now();
+
+	// calculate duration
+	time = chrono::duration_cast<std::chrono::milliseconds>(end - start);
+}
+
+void CountingSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
+{
+	count_assign = 0; count_compare = 0;
+
+	// Create a temporary array for sorting
+	int* output = new int[N]; ++count_assign;
+
+	// Find the largest and smallest element of the array 
+	// to find the range of the count array
+	int max = arr[0]; ++count_assign;
+	int min = arr[0]; ++count_assign;
+	for (int i = 1 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
+	{
+		if (++count_compare && arr[i] > max)
+		{
+			max = arr[i]; ++count_assign;
+		}
+
+		else if (++count_compare && arr[i] < max)
+		{
+			min = arr[i]; ++count_assign;
+		}
+	}
+
+	// Initialize the counting array with 0
+	int range = max - min + 1; ++count_assign;
+	int* count = new int[range] {0}; count_assign += range;
+
+	// Store count of occurrences in count[]
+	for (int i = 0 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
+	{
+		count[arr[i] - min]++; ++count_assign;
+	}
+
+	// Store the cummulative count
+	for (int i = 1 && ++count_assign; ++count_compare && i < range; i++ && ++count_assign)
+	{
+		count[i] += count[i - 1]; ++count_assign;
+	}
+
+	// Place the elements in sorted order
+	for (int i = N - 1 && ++count_assign; ++count_compare && i >= 0; i-- && ++count_assign)
+	{
+		output[count[arr[i] - min] - 1] = arr[i]; ++count_assign;
+		count[arr[i] - min]--; ++count_assign;
+	}
+
+	// Copy from temporary array to original array
+	for (int i = 0 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
+	{
+		arr[i] = output[i]; ++count_assign;
+	}
+
+	// Deallocate
+	delete[] output;
+	delete[] count;
+}
+
+void CountingSortTime(int* arr, int N, chrono::milliseconds& time)
+{
+	auto start = chrono::steady_clock::now();
+
+	int* output = new int[N];
+
+	int max = arr[0];
+	int min = arr[0];
+	for (int i = 1; i < N; i++)
+	{
+		if (arr[i] > max)
+			max = arr[i];
+		else if (arr[i] < max)
+			min = arr[i];
+	}
+
+	int range = max - min + 1;
+	int* count = new int[range] {0};
+
+	for (int i = 0; i < N; i++)
+		count[arr[i] - min]++;
+
+	for (int i = 1; i < range; i++)
+		count[i] += count[i - 1];
+
+	for (int i = N - 1; i >= 0; i--)
+	{
+		output[count[arr[i] - min] - 1] = arr[i];
+		count[arr[i] - min]--;
+	}
+
+	for (int i = 0; i < N; i++)
+		arr[i] = output[i];
+
+	delete[] output;
+	delete[] count;
+
+	auto finish = chrono::steady_clock::now();
+	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+}
+void InsertionSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
+{
+	count_assign = 0; count_compare = 0;
+
+	for (int i = 1 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
+	{
+		int key = arr[i]; ++count_assign;
+		int j = i - 1; ++count_assign;
+
+		while ((++count_compare && j >= 0) && (++count_compare && arr[j] > key))
+		{
+			arr[j + 1] = arr[j]; ++count_assign;
+			--j; ++count_assign;
+		}
+
+		arr[j + 1] = key; ++count_assign;
+	}
+}
+
+void InsertionSortTime(int* arr, int N, chrono::milliseconds& time)
+{
+	auto start = chrono::steady_clock::now();
+
+	for (int i = 1; i < N; i++)
+	{
+
+		int key = arr[i];
+		int j = i - 1;
+
+		while (j >= 0 && arr[j] > key)
+		{
+			arr[j + 1] = arr[j];
+			--j;
+		}
+
+		arr[j + 1] = key;
+	}
+
+	auto finish = chrono::steady_clock::now();
+	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+}
+void ShellSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
+{
+	count_assign = 0; count_compare = 0;
+
+	// Initialize the value of gap size,
+	// Divide the current list into smaller sub-lists having equal size with the given gap
+	for (int gap = N / 2 && ++count_assign; ++count_compare && gap > 0; gap /= 2 && ++count_assign)
+	{
+		// Sort the sub-lists using Insertion Sort
+		for (int i = gap && ++count_assign; ++count_compare && i < N; i += 1 && ++count_assign)
+		{
+			int key = arr[i]; ++count_assign;
+			int j;
+
+			for (j = i && ++count_assign; (++count_compare && j >= gap) && (++count_compare && arr[j - gap] > key); j -= gap && ++count_assign)
+				arr[j] = arr[j - gap]; ++count_assign;
+
+			arr[j] = key; ++count_assign;
+		}
+	}
+}
+
+void ShellSortTime(int* arr, int N, chrono::milliseconds& time)
+{
+	auto start = chrono::steady_clock::now();
+
+	for (int gap = N / 2; gap > 0; gap /= 2)
+	{
+		for (int i = gap; i < N; i += 1)
+		{
+			int key = arr[i];
+			int j;
+
+			for (j = i; j >= gap && arr[j - gap] > key; j -= gap)
+				arr[j] = arr[j - gap];
+
+			arr[j] = key;
+		}
+	}
+
+	auto finish = chrono::steady_clock::now();
+	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+}
+
+// Heap Sort
+void heapifyComparison(int* arr, int N, int i, long long& count_assign, long long& count_compare)
+{
+	// Initialize largest as root
+	++count_assign;
+	int largest = i;
+
+	// left = 2*i + 1
+	++count_assign;
+	int l = 2 * i + 1;
+
+	// right = 2*i + 2
+	++count_assign;
+	int r = 2 * i + 2;
+
+	// If left child is larger than root
+	if ((++count_compare && l < N) && (++count_compare && arr[l] > arr[largest]))
+	{
+		++count_assign;
+		largest = l;
+	}
+	// If right child is larger than largest
+	// so far
+	if ((++count_compare && r < N) && (++count_compare && arr[r] > arr[largest]))
+	{
+		++count_assign;
+		largest = r;
+	}
+	// If largest is not root
+	if (++count_compare && largest != i) {
+		count_assign += 3;
+		int temp = arr[i];
+		arr[i] = arr[largest];
+		arr[largest] = temp;
+		// Recursively heapify the affected
+		heapifyComparison(arr, N, largest, count_assign, count_compare);
+	}
+}
+// Heap Sort main function
+void HeapSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
+{
+	// Build heap
+	for (int i = N / 2 - 1; ++count_compare && i >= 0; i--)
+	{
+		heapifyComparison(arr, N, i, count_assign, count_compare);
+	}
+
+	++count_assign;
+	for (int i = N - 1; ++count_compare && i > 0; ++count_assign && i--) {
+
+		// Move the largest to the end of the array
+		count_assign += 3;
+		int temp = arr[0];
+		arr[0] = arr[i];
+		arr[i] = temp;
+
+		// call max heapify on the reduced heap
+		heapifyComparison(arr, i, 0, count_assign, count_compare);
+	}
+}
+void heapifyTime(int* arr, int N, int i)
+{
+	// Initialize largest as root
+	int largest = i;
+
+	// left = 2*i + 1
+	int l = 2 * i + 1;
+
+	// right = 2*i + 2
+	int r = 2 * i + 2;
+
+	// If left child is larger than root
+	if (l < N && arr[l] > arr[largest])
+		largest = l;
+
+	// If right child is larger than largest
+	// so far
+	if (r < N && arr[r] > arr[largest])
+		largest = r;
+
+	// If largest is not root
+	if (largest != i) {
+		swap(arr[i], arr[largest]);
+		// Recursively heapify the affected
+		heapifyTime(arr, N, largest);
+	}
+}
+// Heap Sort main function
+void HeapSortTime(int* arr, int N, chrono::milliseconds& time)
+{
+	auto start = chrono::steady_clock::now();
+	// Build heap
+	for (int i = N / 2 - 1; i >= 0; i--)
+		heapifyTime(arr, N, i);
+
+	for (int i = N - 1; i > 0; i--) {
+
+		// Move the largest to the end of the array
+		int temp = arr[0];
+		arr[0] = arr[i];
+		arr[i] = temp;
+
+		// call max heapify on the reduced heap
+		heapifyTime(arr, i, 0);
+	}
+	auto finish = chrono::steady_clock::now();
+	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+}
+
+// Comparison
+int partitionComparison(int* arr, int start, int end, long long& count_assign, long long& count_compare)
+{
+	++count_assign;
+	int pivot = arr[start];
+	++count_assign;
+	int count = 0;
+	++count_assign;
+	for (int i = start + 1; ++count_compare && i <= end; i++ && ++count_assign) {
+		if (++count_compare && arr[i] <= pivot)
+		{
+			++count_assign;
+			count++;
+		}
+	}
+
+	// Giving pivot element its correct position
+	++count_assign;
+	int pivotIndex = start + count;
+	count_assign += 3;
+	int temp = arr[pivotIndex];
+	arr[pivotIndex] = arr[start];
+	arr[start] = temp;
+
+	// Sorting left and right parts of the pivot element
+	count_assign += 2;
+	int i = start, j = end;
+
+	while ((++count_compare && i < pivotIndex) && (++count_compare && j > pivotIndex)) {
+
+		while (++count_compare && arr[i] <= pivot) {
+			++count_assign;
+			i++;
+		}
+
+		while (++count_compare && arr[j] > pivot) {
+			++count_assign;
+			j--;
+		}
+
+		if ((++count_compare && i < pivotIndex) && (++count_compare && j > pivotIndex)) {
+			count_assign += 5;
+			int temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+			++i;
+			++j;
+		}
+	}
+	return pivotIndex;
+}
+void QuickSort(int* arr, int start, int end, long long& count_assign, long long& count_compare)
+{
+
+	// base case
+	if (++count_compare && start >= end)
+		return;
+
+	// partitioning the array
+	++count_assign;
+	int p = partitionComparison(arr, start, end, count_assign, count_compare);
+
+	// Sorting the left part
+	QuickSort(arr, start, p - 1, count_assign, count_compare);
+
+	// Sorting the right part
+	QuickSort(arr, p + 1, end, count_assign, count_compare);
+}
+void QuickSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
+{
+	QuickSort(arr, 0, N - 1, count_assign, count_compare);
+}
+
+int partitionTime(int* arr, int start, int end)
+{
+
+	int pivot = arr[start];
+
+	int count = 0;
+	for (int i = start + 1; i <= end; i++) {
+		if (arr[i] <= pivot)
+			count++;
+	}
+
+	// Giving pivot element its correct position
+	int pivotIndex = start + count;
+	swap(arr[pivotIndex], arr[start]);
+
+	// Sorting left and right parts of the pivot element
+	int i = start, j = end;
+
+	while (i < pivotIndex && j > pivotIndex) {
+
+		while (arr[i] <= pivot) {
+			i++;
+		}
+
+		while (arr[j] > pivot) {
+			j--;
+		}
+
+		if (i < pivotIndex && j > pivotIndex) {
+			swap(arr[i++], arr[j--]);
+		}
+	}
+
+	return pivotIndex;
+}
+void _QuickSort(int* arr, int start, int end)
+{
+	// base case
+	if (start >= end)
+		return;
+
+	// partitioning the array
+	int p = partitionTime(arr, start, end);
+
+	// Sorting the left part
+	_QuickSort(arr, start, p - 1);
+
+	// Sorting the right part
+	_QuickSort(arr, p + 1, end);
+}
+void QuickSortTime(int* arr, int N, chrono::milliseconds& time)
+{
+	auto start = chrono::steady_clock::now();
+	_QuickSort(arr, 0, N - 1);
+	auto finish = chrono::steady_clock::now();
+	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+}
+// Comparison
+void SelectionSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
+{
+	int minpos;
+	++count_assign;
+	for (int i = 0; ++count_compare && i < N - 1; i++ && ++count_assign)
+	{
+		++count_assign;
+		minpos = i;
+		++count_assign;
+		for (int j = i + 1; ++count_compare && j < N; j++ && ++count_assign)
+		{
+			if (++count_compare && arr[j] < arr[minpos])
+			{
+				count_assign += 3;
+				int temp = arr[minpos];
+				arr[minpos] = arr[i];
+				arr[i] = temp;
+			}
+		}
+	}
+	return;
+}
+// Time
+void SelectionSortTime(int* arr, int N, chrono::milliseconds& time)
+{
+	auto start = chrono::steady_clock::now();
+	int minpos;
+	for (int i = 0; i < N - 1; i++)
+	{
+		minpos = i;
+		for (int j = i + 1; j < N; j++)
+			if (arr[j] < arr[minpos])
+				minpos = j;
+		swap(arr[minpos], arr[i]);
+	}
+	auto finish = chrono::steady_clock::now();
+	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	return;
+}
