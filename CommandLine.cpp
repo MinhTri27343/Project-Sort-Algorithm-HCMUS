@@ -1,5 +1,6 @@
 #include"CommandLine.h"
-const char *algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort", "shaker-sort", "shell-sort", "heap-sort", "merge-sort", "quick-sort", "counting-sort", "radix-sort", "flash-sort" };
+const char *algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort", "shaker-sort", "shell-sort", "heap-sort", "merge-sort", "quick-sort",
+"counting-sort", "radix-sort", "flash-sort" };
 const char* inputOrder[] = {"-rand", "-nsorted", "-sorted", "-rev"};
 const char* outputParameter[] = { "-time", "-comp", "-both" };
 const char* mode[] = { "-a", "-c" };
@@ -22,27 +23,24 @@ int getComparisionSortAlgorithm(int idxAlgorithmName, int *arr, int n)
 		ShakerSortComparison(arr, n, count_assign, count_compare);
 		break;
 	case 4:
-		ShakerSortComparison(arr, n, count_assign, count_compare);
-		break;
-	case 5:
 		ShellSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 6:
+	case 5:
 		HeapSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 7:
+	case 6:
 		MergeSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 8:
+	case 7:
 		QuickSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 9:
+	case 8:
 		CountingSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 10:
+	case 9:
 		RadixSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 11:
+	case 10:
 		FlashSortComparison(arr, n, count_assign, count_compare);
 		break;
 
@@ -116,18 +114,30 @@ string getNameSortAlgorithm(int idxAlgorithmName)
 		name = "Shaker Sort";
 		break;
 	case 4:
-		name = "Selection Sort";
+		name = "Shell Sort";
 		break;
 	case 5:
-		name = "Insertion Sort";
+		name = "Heap Sort";
 		break;
 	case 6:
-		name = "Bubble Sort";
+		name = "Merge Sort";
 		break;
 	case 7:
-		name = "Shaker Sort";
+		name = "Quick Sort";
+		break;
+	case 8: 
+		name = "Counting Sort";
+		break;
+	case 9: 
+		name = "Radix Sort";
+		break;
+	case 10: 
+		name = "Flash Sort";
+		break;
+	default :
 		break;
 	}
+	return name;
 }
 bool isCommandLine1(int argc, char* argv[], int& idxAlgorithmName, int &idxInputOrder, int& idxOutputParameter, int &idxMode)
 {
