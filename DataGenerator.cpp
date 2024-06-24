@@ -1,4 +1,5 @@
 ﻿#include"CommandLine.h"
+#include"SortAlgorithm.h"
 using namespace std;
 
 template <class T>
