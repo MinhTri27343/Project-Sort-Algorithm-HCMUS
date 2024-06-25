@@ -146,17 +146,18 @@ string getNameInputOrder(int idxInputOrder)
 	switch (idxInputOrder)
 	{
 	case 0:
-		name = "Sorted data";
+		name = "Randomized data";
 		break;
 	case 1: 
 		name = "Nearly sorted data";
 		break;
-	case 2: 
+	case 2:
+		name = "Sorted data";
+		break;
+	case 3: 
 		name = "Reverse sorted data";
 		break;
-	case 3:
-		name = "Randomized data";
-		break;
+	
 	default: 
 		break;
 	}
@@ -242,4 +243,98 @@ bool isCommandLine4(int argc, char* argv[])
 bool isCommandLine5(int argc, char* argv[])
 {
 	return false;
+}
+void getIndexAlgorithmMode(int argc, char* argv[], int& idxAlgorithmName, int& idxInputOrder, int& idxOutputParameter)
+{
+	if (isCommandLine1(argc, argv) || isCommandLine3(argc, argv))
+	{
+		//Algorithm Name
+		for (int i = 0; i < 11; i++)
+		{
+			if (strcmp(argv[2], algorithmName[i]))
+			{
+				idxAlgorithmName = i;
+				break;
+			}
+		}
+		//Output Parameter
+		for (int i = 0; i < 3; i++)
+		{
+			if (strcmp(argv[4], outputParameter[i]))
+			{
+				idxOutputParameter = i;
+				break;
+			}
+		}
+	}
+	if (isCommandLine2(argc, argv))
+	{
+		//Algorithm Name
+		for (int i = 0; i < 11; i++)
+		{
+			if (strcmp(argv[2], algorithmName[i]))
+			{
+				idxAlgorithmName = i;
+				break;
+			}
+		}
+		//Order
+		for (int i = 0; i < 4; i++)
+		{
+			if (strcmp(argv[4], inputOrder[i]))
+			{
+				idxInputOrder = i;
+				break;
+			}
+		}
+		//Output parameter
+		for (int i = 0; i < 3; i++)
+		{
+			if (strcmp(argv[5], outputParameter[i]))
+			{
+				idxOutputParameter = i;
+				break;
+			}
+		}
+	}
+}
+void getIndexComparisonMode(int argc, char* argv[], int& idxAlgorithmName1, int& idxAlgorithmName2, int& idxInputOrder)
+{
+	if (isCommandLine4(argc, argv))
+	{
+		//Algorithm Name 1
+		for (int i = 0; i < 11; i++)
+		{
+			if (strcmp(argv[2], algorithmName[i]))
+			{
+				idxAlgorithmName1 = i;
+				break;
+			}
+		}
+		//Algorithm Name 2
+		idxAlgorithmName2 = idxAlgorithmName1 + 1;
+	}
+	if (isCommandLine5(argc, argv))
+	{
+		//Algorithm Name 1
+		for (int i = 0; i < 11; i++)
+		{
+			if (strcmp(argv[2], algorithmName[i]))
+			{
+				idxAlgorithmName1 = i;
+				break;
+			}
+		}
+		//Algorithm Name 2
+		idxAlgorithmName2 = idxAlgorithmName1 + 1;
+		//Parameter Order
+		for (int i = 0; i < 4; i++)
+		{
+			if (strcmp(argv[5], inputOrder[i]))
+			{
+				idxInputOrder = i;
+				break;
+			}
+		}
+	}
 }
