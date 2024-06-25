@@ -5,3 +5,4 @@ bool isCommandLine3(int argc, char* argv[]);
 bool isCommandLine4(int argc, char* argv[]);
 bool isCommandLine5(int argc, char* argv[]);
 void GenerateData(int a[], int n, int dataType);
+void runCommandLine(int argc, char* argv[]);
