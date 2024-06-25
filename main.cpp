@@ -7,7 +7,7 @@ int main()
 	{
 		argv[i] = new char[50];
 	}
-	int argc = 6;
+	int argc = 5;
 	for (int i = 0; i < argc; i++)
 	{
 		cin >> argv[i];
