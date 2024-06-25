@@ -161,43 +161,37 @@ string getNameInputOrder(int idxInputOrder)
 	}
 	return name;
 }
-bool isCommandLine1(int argc, char* argv[], int& idxAlgorithmName, int &idxInputOrder, int& idxOutputParameter, int &idxMode)
+bool isCommandLine1(int argc, char* argv[])
 {
-	idxMode = -1;
-	idxAlgorithmName = -1;
-	idxInputOrder = -1;
-	idxOutputParameter = -1;
 	if (argc == 5 && strcmp(argv[1], "-a") == 0)
 	{
-		int sizeAlgorithmName = 11;
-		int sizeOutputParameter = 3;
-		for (int i = 0; i < sizeOutputParameter; i++)
-		{
-			if (strcmp(outputParameter[i], argv[4]) == 0)
-			{
-				for (int j = 0; j < sizeAlgorithmName; j++)
-				{
-					if (strcmp(algorithmName[j], argv[2]) == 0)
-					{
-						ifstream in(argv[3]);
-						if (in)
-						{
-							idxAlgorithmName = j;
-							idxOutputParameter = i;
-							idxMode = 0;
-							in.close();
-							return true;
-						}
-					}
-				}
-			}
-		}
+		return true;
 	}
 	return false;
 }
-
-void implementCommandLine1(int& idxAlgorithmName, int& idxInputOrder, int& idxOutputParameter, int& idxMode, string fileName)
+void implementCommandLine1(int& idxAlgorithmName, int& idxInputOrder, int& idxOutputParameter, int& idxMode, string fileName, char* argv[])
 {
+	idxMode = -1;
+	idxAlgorithmName = -1;
+	idxInputOrder = -1;	
+	idxOutputParameter = -1;
+	int sizeAlgorithmName = 11;
+	int sizeOutputParameter = 3;
+	for (int i = 0; i < sizeOutputParameter; i++)
+	{
+		if (strcmp(outputParameter[i], argv[4]) == 0)
+		{
+			idxOutputParameter = i;
+		}
+	}
+	for (int j = 0; j < sizeAlgorithmName; j++)
+	{
+		if (strcmp(algorithmName[j], argv[2]) == 0)
+		{
+			idxAlgorithmName = j;
+		}
+	}
+	idxMode = 0;
 	ifstream in;
 	in.open(fileName);
 	if (!in) return;
@@ -209,8 +203,8 @@ void implementCommandLine1(int& idxAlgorithmName, int& idxInputOrder, int& idxOu
 		in >> arr[i];
 	}
 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
-	cout << "Input size: " << 
-
+	cout << "Input file: " << fileName << endl;
+	delete[] arr;
 	in.close();
 }
 bool isCommandLine2(int argc, char* argv[])
