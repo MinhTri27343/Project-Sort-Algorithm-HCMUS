@@ -334,16 +334,9 @@ void implementCommandLine1(string fileName, int argc, char* argv[])
 {
 	int idxAlgorithmName = 0, idxInputOrder = 0, idxOutputParameter = 0;
 	getIndexAlgorithmMode(argc, argv, idxAlgorithmName, idxInputOrder, idxOutputParameter);
-	ifstream in;
-	in.open(fileName);
-	if (!in) return;
+	int* arr = NULL;
 	int inputSize = 0;
-	in >> inputSize;
-	int* arr = new int[inputSize];
-	for (int i = 0; i < inputSize; i++)
-	{
-		in >> arr[i];
-	}
+	readFile(fileName, arr, inputSize);
 	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
 	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
@@ -353,7 +346,6 @@ void implementCommandLine1(string fileName, int argc, char* argv[])
 	printOutputParameter(idxOutputParameter, time, comparison);
 	writeFile("output.txt", arr, inputSize);
 	delete[] arr;
-	in.close();
 }
 bool isCommandLine2(int argc, char* argv[])
 {
@@ -379,7 +371,7 @@ void implementCommandLine2(int argc, char* argv[])
 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
 	cout << "Input size: " << inputSize << endl;
 	cout << "Input order: " << getNameInputOrder(idxInputOrder) << endl;
-	cout << "------------------------------------\n";
+	cout << "--------------------------------------\n";
 	printOutputParameter(idxOutputParameter, time, comparison);
 	writeFile("output.txt", arr, inputSize);
 	delete[] arr;
@@ -451,7 +443,7 @@ void implementCommandLine4(int argc, char* argv[])
 	cout << "Algorithm: " << nameAlgorithm1 << " | " << nameAlgorithm2 << endl;
 	cout << "Input file: " << fileName << endl;
 	cout << "Input size: " << size << endl;
-	cout << "------------------------------" << endl;
+	cout << "--------------------------------------" << endl;
 
 	chrono::milliseconds time1 = getTimeSortAlgorithm(idxAlgorithmName1, arr1_time, size);
 	chrono::milliseconds time2 = getTimeSortAlgorithm(idxAlgorithmName2, arr2_time, size);
@@ -487,7 +479,7 @@ void implementCommandLine5(int argc, char* argv[])
 	cout << "Algorithm: " << nameAlgorithm1 << " | " << nameAlgorithm2 << endl;
 	cout << "Input size: " << size << endl;
 	cout << "Input order: " << inputOrder << endl;
-	cout << "-----------------------------------" << endl;
+	cout << "--------------------------------------" << endl;
 	
 	int* arr1_time = new int[size];
 	GenerateData(arr1_time, size, idxInputOrder);

@@ -697,7 +697,7 @@ int partitionComparison(int* arr, int start, int end, long long& count_assign, l
 			arr[i] = arr[j];
 			arr[j] = temp;
 			++i;
-			++j;
+			--j;
 		}
 	}
 	return pivotIndex;
