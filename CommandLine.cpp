@@ -139,6 +139,28 @@ string getNameSortAlgorithm(int idxAlgorithmName)
 	}
 	return name;
 }
+string getNameInputOrder(int idxInputOrder)
+{
+	string name = "";
+	switch (idxInputOrder)
+	{
+	case 0:
+		name = "Sorted data";
+		break;
+	case 1: 
+		name = "Nearly sorted data";
+		break;
+	case 2: 
+		name = "Reverse sorted data";
+		break;
+	case 3:
+		name = "Randomized data";
+		break;
+	default: 
+		break;
+	}
+	return name;
+}
 bool isCommandLine1(int argc, char* argv[], int& idxAlgorithmName, int &idxInputOrder, int& idxOutputParameter, int &idxMode)
 {
 	idxMode = -1;
@@ -148,10 +170,10 @@ bool isCommandLine1(int argc, char* argv[], int& idxAlgorithmName, int &idxInput
 	if (argc == 5 && strcmp(argv[1], "-a") == 0)
 	{
 		int sizeAlgorithmName = 11;
-		int sizeOutputOrder = 3;
-		for (int i = 0; i < sizeOutputOrder; i++)
+		int sizeOutputParameter = 3;
+		for (int i = 0; i < sizeOutputParameter; i++)
 		{
-			if (strcmp(inputOrder[i], argv[4]) == 0)
+			if (strcmp(outputParameter[i], argv[4]) == 0)
 			{
 				for (int j = 0; j < sizeAlgorithmName; j++)
 				{
@@ -160,8 +182,8 @@ bool isCommandLine1(int argc, char* argv[], int& idxAlgorithmName, int &idxInput
 						ifstream in(argv[3]);
 						if (in)
 						{
-							idxAlgorithmName = i;
-							idxOutputParameter = j;
+							idxAlgorithmName = j;
+							idxOutputParameter = i;
 							idxMode = 0;
 							in.close();
 							return true;
@@ -179,6 +201,15 @@ void implementCommandLine1(int& idxAlgorithmName, int& idxInputOrder, int& idxOu
 	ifstream in;
 	in.open(fileName);
 	if (!in) return;
+	int inputSize = 0;
+	in >> inputSize;
+	int* arr = new int[inputSize];
+	for (int i = 0; i < inputSize; i++)
+	{
+		in >> arr[i];
+	}
+	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
+	cout << "Input size: " << 
 
 	in.close();
 }
