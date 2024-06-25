@@ -1,6 +1,7 @@
 #include"CommandLine.h"
-const char *algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort", "shaker-sort", "shell-sort", "heap-sort", "merge-sort", "quick-sort", "counting-sort", "radix-sort", "flash-sort" };
-const char* inputOrder[] = {"-rand", "-nsorted", "-sorted", "-rev"};
+const char* algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort", "shaker-sort", "shell-sort", "heap-sort", "merge-sort", "quick-sort",
+"counting-sort", "radix-sort", "flash-sort" };
+const char* inputOrder[] = { "-rand", "-nsorted", "-sorted", "-rev" };
 const char* outputParameter[] = { "-time", "-comp", "-both" };
 const char* mode[] = { "-a", "-c" };
 int getComparisionSortAlgorithm(int idxAlgorithmName, int *arr, int n)
@@ -22,27 +23,24 @@ int getComparisionSortAlgorithm(int idxAlgorithmName, int *arr, int n)
 		ShakerSortComparison(arr, n, count_assign, count_compare);
 		break;
 	case 4:
-		ShakerSortComparison(arr, n, count_assign, count_compare);
-		break;
-	case 5:
 		ShellSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 6:
+	case 5:
 		HeapSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 7:
+	case 6:
 		MergeSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 8:
+	case 7:
 		QuickSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 9:
+	case 8:
 		CountingSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 10:
+	case 9:
 		RadixSortComparison(arr, n, count_assign, count_compare);
 		break;
-	case 11:
+	case 10:
 		FlashSortComparison(arr, n, count_assign, count_compare);
 		break;
 
@@ -116,18 +114,30 @@ string getNameSortAlgorithm(int idxAlgorithmName)
 		name = "Shaker Sort";
 		break;
 	case 4:
-		name = "Selection Sort";
+		name = "Shell Sort";
 		break;
 	case 5:
-		name = "Insertion Sort";
+		name = "Heap Sort";
 		break;
 	case 6:
-		name = "Bubble Sort";
+		name = "Merge Sort";
 		break;
 	case 7:
-		name = "Shaker Sort";
+		name = "Quick Sort";
+		break;
+	case 8: 
+		name = "Counting Sort";
+		break;
+	case 9: 
+		name = "Radix Sort";
+		break;
+	case 10: 
+		name = "Flash Sort";
+		break;
+	default :
 		break;
 	}
+	return name;
 }
 bool isCommandLine1(int argc, char* argv[], int& idxAlgorithmName, int &idxInputOrder, int& idxOutputParameter, int &idxMode)
 {
@@ -174,17 +184,72 @@ void implementCommandLine1(int& idxAlgorithmName, int& idxInputOrder, int& idxOu
 }
 bool isCommandLine2(int argc, char* argv[])
 {
+	if (argc == 6 && argv[1] = "-a")
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine2()
+{
+	
 }
 bool isCommandLine3(int argc, char* argv[])
 {
+	if (argc == 5 && argv[1] == "-a" && isdigit(argv[3][0]))
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine3()
+{
+
 }
 bool isCommandLine4(int argc, char* argv[])
 {
+	if (argc == 5 && argv[1] == "-c")
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine4()
+{
+
 }
 bool isCommandLine5(int argc, char* argv[])
 {
+	if (argc == 6 && argv[1] = "1" && isdigit(argv[4][0]))
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine5()
+{
+
+}
+void runCommandLine(int argc, char* argv[])
+{
+	if (isCommandLine1(argc, argv))
+	{
+
+	}
+	if (isCommandLine2(argc, argv))
+	{
+
+	}
+	if (isCommandLine3(argc, argv))
+	{
+
+	}
+	if (isCommandLine4(argc, argv))
+	{
+
+	}
+	if (isCommandLine5(argc, argv))
+	{
+
+	}
 }
