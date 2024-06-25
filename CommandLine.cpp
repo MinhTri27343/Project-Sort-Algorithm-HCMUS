@@ -163,6 +163,26 @@ string getNameInputOrder(int idxInputOrder)
 	return name;
 }
 
+// Dung de in format cua output parameter
+void printOutputParameter(int idxOutputParameter, chrono::milliseconds time, long long comparision)
+{
+	switch (idxOutputParameter)
+	{
+	case 0: 
+		cout << "Running Time: " << time.count();
+		break;
+	case 1: 
+		cout << "Comparision: " << comparision;
+		break;
+	case 2: 
+		cout << "Running Time: " << time.count() << endl;
+		cout << "Comparision: " << comparision << endl;
+		break;
+	default: 
+		break;
+	}
+}
+
 // Tự build 
 bool isCommandLine1(int argc, char* argv[], int& idxAlgorithmName, int &idxInputOrder, int& idxOutputParameter, int &idxMode)
 {
