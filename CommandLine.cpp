@@ -4,6 +4,7 @@ const char *algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort
 const char* inputOrder[] = {"-rand", "-nsorted", "-sorted", "-rev"};
 const char* outputParameter[] = { "-time", "-comp", "-both" };
 const char* mode[] = { "-a", "-c" };
+// Function dùng chung 
 int getComparisionSortAlgorithm(int idxAlgorithmName, int *arr, int n)
 {
 	long long count_compare = 0;
@@ -139,6 +140,30 @@ string getNameSortAlgorithm(int idxAlgorithmName)
 	}
 	return name;
 }
+string getNameInputOrder(int idxInputOrder)
+{
+	string name = "";
+	switch (idxInputOrder)
+	{
+	case 0:
+		name = "Sorted data";
+		break;
+	case 1: 
+		name = "Nearly sorted data";
+		break;
+	case 2: 
+		name = "Reverse sorted data";
+		break;
+	case 3:
+		name = "Randomized data";
+		break;
+	default: 
+		break;
+	}
+	return name;
+}
+
+// Tự build 
 bool isCommandLine1(int argc, char* argv[], int& idxAlgorithmName, int &idxInputOrder, int& idxOutputParameter, int &idxMode)
 {
 	idxMode = -1;
