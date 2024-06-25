@@ -1,10 +1,10 @@
 #include"CommandLine.h"
-const char *algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort", "shaker-sort", "shell-sort", "heap-sort", "merge-sort", "quick-sort",
+const char* algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort", "shaker-sort", "shell-sort", "heap-sort", "merge-sort", "quick-sort",
 "counting-sort", "radix-sort", "flash-sort" };
-const char* inputOrder[] = {"-rand", "-nsorted", "-sorted", "-rev"};
+const char* inputOrder[] = { "-rand", "-nsorted", "-sorted", "-rev" };
 const char* outputParameter[] = { "-time", "-comp", "-both" };
 const char* mode[] = { "-a", "-c" };
-int getComparisionSortAlgorithm(int idxAlgorithmName, int *arr, int n)
+int getComparisonSortAlgorithm(int idxAlgorithmName, int *arr, int n)
 {
 	long long count_compare = 0;
 	long long count_assign = 0;
@@ -139,62 +139,265 @@ string getNameSortAlgorithm(int idxAlgorithmName)
 	}
 	return name;
 }
-bool isCommandLine1(int argc, char* argv[], int& idxAlgorithmName, int &idxInputOrder, int& idxOutputParameter, int &idxMode)
+string getNameInputOrder(int idxInputOrder)
 {
-	idxMode = -1;
-	idxAlgorithmName = -1;
-	idxInputOrder = -1;
-	idxOutputParameter = -1;
-	if (argc == 5 && strcmp(argv[1], "-a") == 0)
+	string name = "";
+	switch (idxInputOrder)
 	{
-		int sizeAlgorithmName = 11;
-		int sizeOutputOrder = 3;
-		for (int i = 0; i < sizeOutputOrder; i++)
+	case 0:
+		name = "Randomized data";
+		break;
+	case 1: 
+		name = "Nearly sorted data";
+		break;
+	case 2: 
+		name = "Sorted data";
+		break;
+	case 3:
+		name = "Reverse sorted data";
+		break;
+	default: 
+		break;
+	}
+	return name;
+}
+void getIndexAlgorithmMode(int argc, char* argv[], int& idxAlgorithmName, int& idxInputOrder, int& idxOutputParameter)
+{
+	if (isCommandLine1(argc, argv) || isCommandLine3(argc, argv))
+	{
+		//Algorithm Name
+		for (int i = 0; i < 11; i++)
 		{
-			if (strcmp(inputOrder[i], argv[4]) == 0)
+			if (!strcmp(argv[2], algorithmName[i]))
 			{
-				for (int j = 0; j < sizeAlgorithmName; j++)
-				{
-					if (strcmp(algorithmName[j], argv[2]) == 0)
-					{
-						ifstream in(argv[3]);
-						if (in)
-						{
-							idxAlgorithmName = i;
-							idxOutputParameter = j;
-							idxMode = 0;
-							in.close();
-							return true;
-						}
-					}
-				}
+				idxAlgorithmName = i;
+				break;
 			}
 		}
+		//Output Parameter
+		for (int i = 0; i < 3; i++)
+		{
+			if (!strcmp(argv[4], outputParameter[i]))
+			{
+				idxOutputParameter = i;
+				break;
+			}
+		}
+	}
+	if (isCommandLine2(argc, argv))
+	{
+		//Algorithm Name
+		for (int i = 0; i < 11; i++)
+		{
+			if (!strcmp(argv[2], algorithmName[i]))
+			{
+				idxAlgorithmName = i;
+				break;
+			}
+		}
+		//Order
+		for (int i = 0; i < 4; i++)
+		{
+			if (!strcmp(argv[4], inputOrder[i]))
+			{
+				idxInputOrder = i;
+				break;
+			}
+		}
+		//Output parameter
+		for (int i = 0; i < 3; i++)
+		{
+			if (!strcmp(argv[5], outputParameter[i]))
+			{
+				idxOutputParameter = i;
+				break;
+			}
+		}
+	}
+}
+void getIndexComparisonMode(int argc, char* argv[], int& idxAlgorithmName1, int& idxAlgorithmName2, int& idxInputOrder)
+{
+	if (isCommandLine4(argc, argv))
+	{
+		//Algorithm Name 1
+		for (int i = 0; i < 11; i++)
+		{
+			if (!strcmp(argv[2], algorithmName[i]))
+			{
+				idxAlgorithmName1 = i;
+				break;
+			}
+		}
+		//Algorithm Name 2
+		idxAlgorithmName2 = idxAlgorithmName1 + 1;
+	}
+	if (isCommandLine5(argc, argv))
+	{
+		//Algorithm Name 1
+		for (int i = 0; i < 11; i++)
+		{
+			if (!strcmp(argv[2], algorithmName[i]))
+			{
+				idxAlgorithmName1 = i;
+				break;
+			}
+		}
+		//Algorithm Name 2
+		idxAlgorithmName2 = idxAlgorithmName1 + 1;
+		//Parameter Order
+		for (int i = 0; i < 4; i++)
+		{
+			if (!strcmp(argv[5], inputOrder[i]))
+			{
+				idxInputOrder = i;
+				break;
+			}
+		}
+	}
+}
+void printOutputParameter(int idxOutputParameter, chrono::milliseconds time, long long comparison)
+{
+	switch (idxOutputParameter)
+	{
+	case 0:
+		cout << "Running Time: " << time.count();
+		break;
+	case 1:
+		cout << "comparison: " << comparison;
+		break;
+	case 2:
+		cout << "Running Time: " << time.count() << endl;
+		cout << "comparison: " << comparison << endl;
+		break;
+	default:
+		break;
+	}
+}
+void writeFile(string fileName, int* arr, int n)
+{
+	ofstream out(fileName, ios::out);
+	out << n << endl;
+	for (int i = 0; i < n; i++)
+	{
+		out << arr[i] << " ";
+	}
+	out.close();
+}
+bool isCommandLine1(int argc, char* argv[])
+{
+	if (argc == 5 && strcmp(argv[1], "-a") == 0)
+	{
+		return true;
 	}
 	return false;
 }
 
-void implementCommandLine1(int& idxAlgorithmName, int& idxInputOrder, int& idxOutputParameter, int& idxMode, string fileName)
+void implementCommandLine1(string fileName, int argc, char* argv[])
 {
+	int idxAlgorithmName = 0, idxInputOrder = 0, idxOutputParameter = 0;
+	getIndexAlgorithmMode(argc, argv, idxAlgorithmName, idxInputOrder, idxOutputParameter);
 	ifstream in;
 	in.open(fileName);
 	if (!in) return;
-
+	int inputSize = 0;
+	in >> inputSize;
+	int* arr = new int[inputSize];
+	for (int i = 0; i < inputSize; i++)
+	{
+		in >> arr[i];
+	}
+	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
+	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
+	cout << "Input file: " << fileName << endl;
+	cout << "Input size: " << inputSize << endl;
+	cout << "--------------------------------\n";
+	printOutputParameter(idxOutputParameter, time, comparison);
+	writeFile("output.txt", arr, inputSize);
+	delete[] arr;
 	in.close();
 }
 bool isCommandLine2(int argc, char* argv[])
 {
+	if (argc == 6 && !strcmp(argv[1], "-a"))
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine2(int argc, char* argv[])
+{
+	int idxAlgorithmName = -1;
+	int idxInputOrder = -1;
+	int idxOutputParameter = -1;
+	getIndexAlgorithmMode(argc, argv, idxAlgorithmName, idxInputOrder, idxOutputParameter);
+	int sizeAlgorithmName = 11;
+	int sizeOutputParameter = 3;
+	int inputSize = stoi(argv[3]);
+	int* arr = new int[inputSize];
+	GenerateData(arr, inputSize, idxInputOrder);
+	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
+	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
+	cout << "Input size: " << inputSize << endl;
+	cout << "Input order: " << getNameInputOrder(idxInputOrder) << endl;
+	cout << "------------------------------------\n";
+	printOutputParameter(idxOutputParameter, time, comparison);
+	writeFile("output.txt", arr, inputSize);
+	delete[] arr;
 }
 bool isCommandLine3(int argc, char* argv[])
 {
+	if (argc == 5 && argv[1] == "-a" && isdigit(argv[3][0]))
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine3()
+{
+
 }
 bool isCommandLine4(int argc, char* argv[])
 {
+	if (argc == 5 && argv[1] == "-c")
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine4()
+{
+
 }
 bool isCommandLine5(int argc, char* argv[])
 {
 	return false;
+}
+void implementCommandLine5()
+{
+
+}
+void runCommandLine(int argc, char* argv[])
+{
+	if (isCommandLine1(argc, argv))
+	{
+		implementCommandLine1(argv[3], argc, argv);
+	}
+	if (isCommandLine2(argc, argv))
+	{
+		implementCommandLine2(argc, argv);
+	}
+	if (isCommandLine3(argc, argv))
+	{
+
+	}
+	if (isCommandLine4(argc, argv))
+	{
+
+	}
+	if (isCommandLine5(argc, argv))
+	{
+
+	}
 }
