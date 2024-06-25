@@ -1,7 +1,7 @@
 #include"CommandLine.h"
-const char *algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort", "shaker-sort", "shell-sort", "heap-sort", "merge-sort", "quick-sort",
+const char* algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort", "shaker-sort", "shell-sort", "heap-sort", "merge-sort", "quick-sort",
 "counting-sort", "radix-sort", "flash-sort" };
-const char* inputOrder[] = {"-rand", "-nsorted", "-sorted", "-rev"};
+const char* inputOrder[] = { "-rand", "-nsorted", "-sorted", "-rev" };
 const char* outputParameter[] = { "-time", "-comp", "-both" };
 const char* mode[] = { "-a", "-c" };
 int getComparisionSortAlgorithm(int idxAlgorithmName, int *arr, int n)
@@ -184,17 +184,72 @@ void implementCommandLine1(int& idxAlgorithmName, int& idxInputOrder, int& idxOu
 }
 bool isCommandLine2(int argc, char* argv[])
 {
+	if (argc == 6 && argv[1] = "-a")
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine2()
+{
+	
 }
 bool isCommandLine3(int argc, char* argv[])
 {
+	if (argc == 5 && argv[1] == "-a" && isdigit(argv[3][0]))
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine3()
+{
+
 }
 bool isCommandLine4(int argc, char* argv[])
 {
+	if (argc == 5 && argv[1] == "-c")
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine4()
+{
+
 }
 bool isCommandLine5(int argc, char* argv[])
 {
+	if (argc == 6 && argv[1] = "1" && isdigit(argv[4][0]))
+	{
+		return true;
+	}
 	return false;
+}
+void implementCommandLine5()
+{
+
+}
+void runCommandLine(int argc, char* argv[])
+{
+	if (isCommandLine1(argc, argv))
+	{
+
+	}
+	if (isCommandLine2(argc, argv))
+	{
+
+	}
+	if (isCommandLine3(argc, argv))
+	{
+
+	}
+	if (isCommandLine4(argc, argv))
+	{
+
+	}
+	if (isCommandLine5(argc, argv))
+	{
+
+	}
 }
