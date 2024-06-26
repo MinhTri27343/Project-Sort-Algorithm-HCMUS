@@ -981,13 +981,20 @@ void FlashSortComparison(int* arr, int N, long long& count_assign, long long& co
 void FlashSortTime(int* arr, int N, chrono::milliseconds& time)
 {
 	auto start = chrono::steady_clock::now();
-	if (N <= 1) return;
+	if (N <= 1) 
+	{
+		auto finish = chrono::steady_clock::now();
+		time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+		return;
+	}
 	if (N == 2)
 	{
 		if (arr[0] > arr[1])
 		{
 			swap(arr[0], arr[1]);
 		}
+		auto finish = chrono::steady_clock::now();
+		time = chrono::duration_cast<chrono::milliseconds>(finish - start);
 		return;
 	}
 	int max = INT_MIN, min = INT_MAX;
@@ -1002,7 +1009,12 @@ void FlashSortTime(int* arr, int N, chrono::milliseconds& time)
 			min = arr[i];
 		}
 	}
-	if (max == min) return;
+	if (max == min) 
+	{
+		auto finish = chrono::steady_clock::now();
+		time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+		return;
+	}
 	//Step 1: Classify
 	int num_bucket = 0.45 * N;// 0.45 is the constant
 	//#define getK(x) 1ll * (num_bucket - 1) * (x - min) / (max - min)
