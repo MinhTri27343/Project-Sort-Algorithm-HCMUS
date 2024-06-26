@@ -368,50 +368,46 @@ void CountingSortComparison(int* arr, int N, long long& count_assign, long long&
 
 	// Find the largest and smallest element of the array 
 	// to find the range of the count array
-	int max = 0; ++count_assign;
-	int min = INT_MAX; ++count_assign;
-	++count_assign;
-	for (int i = 0; ++count_compare && i < N; i++, ++count_assign)
+	int max = arr[0]; ++count_assign;
+	int min = arr[0]; ++count_assign;
+	for (int i = 1 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
 	{
 		if (++count_compare && arr[i] > max)
 		{
 			max = arr[i]; ++count_assign;
 		}
-		else if (++count_compare && arr[i] < min)
+
+		else if (++count_compare && arr[i] < max)
 		{
 			min = arr[i]; ++count_assign;
 		}
 	}
 
 	// Initialize the counting array with 0
-	int range = max - min + 1;
+	int range = max - min + 1; ++count_assign;
 	int* count = new int[range] {0}; count_assign += range;
 
 	// Store count of occurrences in count[]
-	++count_assign;
-	for (int i = 0; ++count_compare && i < N; i++, ++count_assign)
+	for (int i = 0 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
 	{
 		count[arr[i] - min]++; ++count_assign;
 	}
 
 	// Store the cummulative count
-	++count_assign;
-	for (int i = 1; ++count_compare && i < range; i++, ++count_assign)
+	for (int i = 1 && ++count_assign; ++count_compare && i < range; i++ && ++count_assign)
 	{
 		count[i] += count[i - 1]; ++count_assign;
 	}
 
 	// Place the elements in sorted order
-	++count_assign;
-	for (int i = N - 1; ++count_compare && i >= 0; i--, ++count_assign)
+	for (int i = N - 1 && ++count_assign; ++count_compare && i >= 0; i-- && ++count_assign)
 	{
 		output[count[arr[i] - min] - 1] = arr[i]; ++count_assign;
 		count[arr[i] - min]--; ++count_assign;
 	}
 
 	// Copy from temporary array to original array
-	++count_assign;
-	for (int i = 0; ++count_compare && i < N; i++, ++count_assign)
+	for (int i = 0 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
 	{
 		arr[i] = output[i]; ++count_assign;
 	}
@@ -427,18 +423,18 @@ void CountingSortTime(int* arr, int N, chrono::milliseconds& time)
 
 	int* output = new int[N];
 
-	int max = 0;
-	int min = INT_MAX;
-	for (int i = 0; i < N; i++)
+	int max = arr[0];
+	int min = arr[0];
+	for (int i = 1; i < N; i++)
 	{
 		if (arr[i] > max)
 			max = arr[i];
-		else if (arr[i] < min)
+		else if (arr[i] < max)
 			min = arr[i];
 	}
 
 	int range = max - min + 1;
-	int* count = new int[max + 1] {0};
+	int* count = new int[range] {0};
 
 	for (int i = 0; i < N; i++)
 		count[arr[i] - min]++;
@@ -918,7 +914,7 @@ void Classify_Element_Comparison(int* arr, int N, long long& count_assign, long 
 	count_assign++;
 	for (int i = 0; count_compare++, i < N; i++, ++count_assign)
 	{
-		int k = (int)((num_bucket - 1) * ((float)(arr[i] - min) / (max - min))); ++count_assign; // find index of bucket
+		int k = (long long)((long long)(num_bucket - 1) * (long long)(arr[i] - min)) / (int)(max - min); ++count_assign; // find index of bucket
 		bucket[k] += 1; ++count_assign; // if element in bucket, the number of element in bucket plus 1
 	}
 	count_assign++;
@@ -935,16 +931,16 @@ void Permutation_Element_Comparison(int* arr, int  N, long long& count_assign, l
 	// Permutate all the element into the correct bucket.
 	while (++count_compare && count < N)
 	{
-		int k = (int)((num_bucket - 1) * ((float)(arr[i] - min) / (max - min))); count_assign++; // find index of bucket
+		int k = (long long)((long long)(num_bucket - 1) * (long long)(arr[i] - min)) / (int)(max - min); count_assign++; // find index of bucket
 		while (++count_compare && i >= bucket[k]) // If the bucket is full. Shift the index + 1.
 		{
 			i++; count_assign++;
-			k = (int)((num_bucket - 1) * ((float)(arr[i] - min) / (max - min))); count_assign++; // find index of bucket
+			k = (long long)((long long)(num_bucket - 1) * (long long)(arr[i] - min)) / (int)(max - min); count_assign++; // find index of bucket
 		}
 		int value = arr[i]; count_assign++; // save the value.
 		while (++count_compare && i < bucket[k])
 		{
-			k = (int)((num_bucket - 1) * ((float)(arr[i] - min) / (max - min))); count_assign++;
+			k = (long long)((long long)(num_bucket - 1) * (long long)(arr[i] - min)) / (int)(max - min); count_assign++;
 			swap(arr[bucket[k] - 1], value); count_assign += 3; // change arr[bucket[k] - 1] = value, and value = arr[bucket[k] - 1];
 			bucket[k]--; count_assign++; // decrease the nums of bucket by 1. Because adding the value in the bucket.
 			count++; count_assign++;
@@ -1015,7 +1011,7 @@ void Classify_Element(int* arr, int N, int& max, int& min, int*& bucket)
 	bucket = new int[num_bucket] {0}; // divide element into (m) bucket
 	for (int i = 0; i < N; i++)
 	{
-		int k = (int)((num_bucket - 1) * ((float)(arr[i] - min) / (max - min))); // find index of bucket
+		int k = (long long)((long long)(num_bucket - 1) * (long long)(arr[i] - min)) / (int)(max - min); // find index of bucket
 		bucket[k] += 1; // if element in bucket, the number of element in bucket plus 1
 	}
 	for (int i = 1; i < num_bucket; i++)
@@ -1023,6 +1019,7 @@ void Classify_Element(int* arr, int N, int& max, int& min, int*& bucket)
 		bucket[i] = bucket[i - 1] + bucket[i]; // find the index of the end of each bucket.
 	}
 }
+
 void Permutation_Element(int* arr, int N, int& max, int& min, int*& bucket)
 {
 	int num_bucket = 0.45 * N; // 0.45 is the constant
@@ -1032,16 +1029,16 @@ void Permutation_Element(int* arr, int N, int& max, int& min, int*& bucket)
 	// Permutate all the element into the correct bucket.
 	while (count < N)
 	{
-		int k = (int)((num_bucket - 1) * ((float)(arr[i] - min) / (max - min))); // find index of bucket
+		int k = (long long)((long long)(num_bucket - 1) * (long long)(arr[i] - min)) / (int)(max - min); // find index of bucket
 		while (i >= bucket[k]) // If the bucket is full. Shift the index + 1.
 		{
 			i++;
-			k = (int)((num_bucket - 1) * ((float)(arr[i] - min) / (max - min)));
+			k = (long long)((long long)(num_bucket - 1) * (long long)(arr[i] - min)) / (int)(max - min);
 		}
 		int value = arr[i];
 		while (i < bucket[k])
 		{
-			k = (int)((num_bucket - 1) * ((float)(arr[i] - min) / (max - min)));
+			k = (long long)((long long)(num_bucket - 1) * (long long)(arr[i] - min)) / (int)(max - min);
 			swap(arr[bucket[k] - 1], value); // change arr[bucket[k] - 1] = value, and value = arr[bucket[k] - 1];
 			bucket[k]--;
 			count++;

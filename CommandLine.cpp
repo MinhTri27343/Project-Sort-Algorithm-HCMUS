@@ -1,5 +1,6 @@
 #include"CommandLine.h"
 #include<iomanip>
+#include <cstring>
 const char* algorithmName[] = { "selection-sort", "insertion-sort", "bubble-sort", "shaker-sort", "shell-sort", "heap-sort", "merge-sort", "quick-sort",
 "counting-sort", "radix-sort", "flash-sort" };
 const char* inputOrder[] = { "-rand", "-nsorted", "-sorted", "-rev" };
@@ -71,7 +72,7 @@ chrono::milliseconds getTimeSortAlgorithm(int idxAlgorithmName, int* arr, int n)
 		ShellSortTime(arr, n, time);
 		break;
 	case 5:
-		HeapSortTime(arr, n, time); 
+		HeapSortTime(arr, n, time);
 		break;
 	case 6:
 		MergeSortTime(arr, n, time);
@@ -327,6 +328,27 @@ bool isCommandLine1(int argc, char* argv[])
 	}
 	return false;
 }
+// void implementCommandLine1(string fileName, int argc, char* argv[])
+// {
+// 	int idxAlgorithmName = -1, idxInputOrder = -1, idxOutputParameter = -1;
+// 	getIndexAlgorithmMode(argc, argv, idxAlgorithmName, idxInputOrder, idxOutputParameter);
+
+// 	int* arr = NULL;
+// 	int inputSize = 0;
+// 	readFile(fileName, arr, inputSize);
+// 	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
+// 	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+
+
+// 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
+// 	cout << "Input file: " << fileName << endl;
+// 	cout << "Input size: " << inputSize << endl;
+// 	cout << "--------------------------------\n";
+// 	printOutputParameter(idxOutputParameter, time, comparison);
+// 	writeFile("output.txt", arr, inputSize);
+// 	delete[] arr;
+// }
+
 void implementCommandLine1(string fileName, int argc, char* argv[])
 {
 	int idxAlgorithmName = -1, idxInputOrder = -1, idxOutputParameter = -1;
@@ -335,8 +357,12 @@ void implementCommandLine1(string fileName, int argc, char* argv[])
 	int* arr = NULL;
 	int inputSize = 0;
 	readFile(fileName, arr, inputSize);
-	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
-	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+	int* arr1_time = NULL;
+	int* arr1_compare = NULL;
+	CopyValue(arr1_time, arr, inputSize);
+	CopyValue(arr1_compare, arr, inputSize);
+	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr1_compare, inputSize);
+	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr1_time, inputSize);
 
 
 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
@@ -347,6 +373,7 @@ void implementCommandLine1(string fileName, int argc, char* argv[])
 	writeFile("output.txt", arr, inputSize);
 	delete[] arr;
 }
+
 bool isCommandLine2(int argc, char* argv[])
 {
 	if (argc == 6 && strcmp(argv[1], "-a") == 0)
@@ -355,6 +382,40 @@ bool isCommandLine2(int argc, char* argv[])
 	}
 	return false;
 }
+// void implementCommandLine2(int argc, char* argv[])
+// {
+// 	int idxAlgorithmName = -1;
+// 	int idxInputOrder = -1;
+// 	int idxOutputParameter = -1;
+// 	getIndexAlgorithmMode(argc, argv, idxAlgorithmName, idxInputOrder, idxOutputParameter);
+
+// 	int sizeAlgorithmName = 11;
+// 	int sizeOutputParameter = 3;
+// 	int inputSize = stoi(argv[3]);
+
+// 	int* arr = new int[inputSize];
+// 	GenerateData(arr, inputSize, idxInputOrder);
+// 	writeFile("input.txt", arr, inputSize);
+// 	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
+// 	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+
+// 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
+// 	cout << "Input size: " << inputSize << endl;
+// 	cout << "Input order: " << getNameInputOrder(idxInputOrder) << endl;
+// 	cout << "--------------------------------------\n";
+// 	printOutputParameter(idxOutputParameter, time, comparison);
+// 	writeFile("output.txt", arr, inputSize);
+// 	delete[] arr;
+// }
+bool isCommandLine3(int argc, char* argv[])
+{
+	if (argc == 5 && strcmp(argv[1], "-a") == 0 && isdigit(argv[3][0]))
+	{
+		return true;
+	}
+	return false;
+}
+
 void implementCommandLine2(int argc, char* argv[])
 {
 	int idxAlgorithmName = -1;
@@ -369,8 +430,12 @@ void implementCommandLine2(int argc, char* argv[])
 	int* arr = new int[inputSize];
 	GenerateData(arr, inputSize, idxInputOrder);
 	writeFile("input.txt", arr, inputSize);
-	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
-	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+	int* arr1_time = NULL;
+	int* arr1_compare = NULL;
+	CopyValue(arr1_time, arr, inputSize);
+	CopyValue(arr1_compare, arr, inputSize);
+	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr1_compare, inputSize);
+	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr1_time, inputSize);
 
 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
 	cout << "Input size: " << inputSize << endl;
@@ -380,14 +445,7 @@ void implementCommandLine2(int argc, char* argv[])
 	writeFile("output.txt", arr, inputSize);
 	delete[] arr;
 }
-bool isCommandLine3(int argc, char* argv[])
-{
-	if (argc == 5 && strcmp(argv[1], "-a") == 0 && isdigit(argv[3][0]))
-	{
-		return true;
-	}
-	return false;
-}
+
 void implementCommandLine3(int argc, char* argv[])
 {
 	int idxAlgorithmName, idxInputOrder, idxOutputParameter;
@@ -484,7 +542,7 @@ void implementCommandLine5(int argc, char* argv[])
 	cout << "Input size: " << size << endl;
 	cout << "Input order: " << inputOrder << endl;
 	cout << "--------------------------------------" << endl;
-	
+
 	int* arr1_time = new int[size];
 	GenerateData(arr1_time, size, idxInputOrder);
 	writeFile("input.txt", arr1_time, size);
