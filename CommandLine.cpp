@@ -71,7 +71,7 @@ chrono::milliseconds getTimeSortAlgorithm(int idxAlgorithmName, int* arr, int n)
 		ShellSortTime(arr, n, time);
 		break;
 	case 5:
-		HeapSortTime(arr, n, time);
+		HeapSortTime(arr, n, time); 
 		break;
 	case 6:
 		MergeSortTime(arr, n, time);
@@ -329,13 +329,16 @@ bool isCommandLine1(int argc, char* argv[])
 }
 void implementCommandLine1(string fileName, int argc, char* argv[])
 {
-	int idxAlgorithmName = 0, idxInputOrder = 0, idxOutputParameter = 0;
+	int idxAlgorithmName = -1, idxInputOrder = -1, idxOutputParameter = -1;
 	getIndexAlgorithmMode(argc, argv, idxAlgorithmName, idxInputOrder, idxOutputParameter);
+
 	int* arr = NULL;
 	int inputSize = 0;
 	readFile(fileName, arr, inputSize);
 	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
 	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+
+
 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
 	cout << "Input file: " << fileName << endl;
 	cout << "Input size: " << inputSize << endl;
@@ -358,13 +361,17 @@ void implementCommandLine2(int argc, char* argv[])
 	int idxInputOrder = -1;
 	int idxOutputParameter = -1;
 	getIndexAlgorithmMode(argc, argv, idxAlgorithmName, idxInputOrder, idxOutputParameter);
+
 	int sizeAlgorithmName = 11;
 	int sizeOutputParameter = 3;
 	int inputSize = stoi(argv[3]);
+
 	int* arr = new int[inputSize];
 	GenerateData(arr, inputSize, idxInputOrder);
+	writeFile("input.txt", arr, inputSize);
 	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
 	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+
 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
 	cout << "Input size: " << inputSize << endl;
 	cout << "Input order: " << getNameInputOrder(idxInputOrder) << endl;
