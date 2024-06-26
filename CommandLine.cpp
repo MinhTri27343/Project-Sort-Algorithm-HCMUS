@@ -68,27 +68,24 @@ chrono::milliseconds getTimeSortAlgorithm(int idxAlgorithmName, int* arr, int n)
 		ShakerSortTime(arr, n, time);
 		break;
 	case 4:
-		ShakerSortTime(arr, n, time);
-		break;
-	case 5:
 		ShellSortTime(arr, n, time);
 		break;
-	case 6:
+	case 5:
 		HeapSortTime(arr, n, time);
 		break;
-	case 7:
+	case 6:
 		MergeSortTime(arr, n, time);
 		break;
-	case 8:
+	case 7:
 		QuickSortTime(arr, n, time);
 		break;
-	case 9:
+	case 8:
 		CountingSortTime(arr, n, time);
 		break;
-	case 10:
+	case 9:
 		RadixSortTime(arr, n, time);
 		break;
-	case 11:
+	case 10:
 		FlashSortTime(arr, n, time);
 		break;
 
