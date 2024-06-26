@@ -42,7 +42,7 @@ void BubbleSortComparison(int* arr, int N, long long& count_assign, long long& c
 }
 
 // Calculate execution time of bubble sort algorithms
-void BubbleSortTime(int* arr, int N, chrono::milliseconds& time)
+void BubbleSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	// get start time
 	auto start = chrono::steady_clock::now();
@@ -54,7 +54,7 @@ void BubbleSortTime(int* arr, int N, chrono::milliseconds& time)
 	auto end = chrono::steady_clock::now();
 
 	// calculate duration
-	time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+	time = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 }
 
 
@@ -187,7 +187,7 @@ void MergeSortComparison(int* arr, int N, long long& count_assign, long long& co
 	Merge_Sort_Comparison(arr, l, r, count_assign, count_compare);
 }
 // Merge sort algorithm and determine execution time 
-void MergeSortTime(int* arr, int N, chrono::milliseconds& time)
+void MergeSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	// get start time
 	auto start = chrono::steady_clock::now();
@@ -199,7 +199,7 @@ void MergeSortTime(int* arr, int N, chrono::milliseconds& time)
 	auto end = chrono::steady_clock::now();
 
 	// calculate duration
-	time = chrono::duration_cast<std::chrono::milliseconds>(end - start);
+	time = chrono::duration_cast<std::chrono::microseconds>(end - start);
 }
 
 // get number of digits of integer
@@ -344,7 +344,7 @@ void RadixSort(int* arr, int N)
 }
 
 // Radix sort algorithm and determine execution time 
-void RadixSortTime(int* arr, int N, chrono::milliseconds& time)
+void RadixSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	// get start time
 	auto start = chrono::steady_clock::now();
@@ -356,7 +356,7 @@ void RadixSortTime(int* arr, int N, chrono::milliseconds& time)
 	auto end = chrono::steady_clock::now();
 
 	// calculate duration
-	time = chrono::duration_cast<std::chrono::milliseconds>(end - start);
+	time = chrono::duration_cast<std::chrono::microseconds>(end - start);
 }
 
 void CountingSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
@@ -417,7 +417,7 @@ void CountingSortComparison(int* arr, int N, long long& count_assign, long long&
 	delete[] count;
 }
 
-void CountingSortTime(int* arr, int N, chrono::milliseconds& time)
+void CountingSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 
@@ -455,7 +455,7 @@ void CountingSortTime(int* arr, int N, chrono::milliseconds& time)
 	delete[] count;
 
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }
 void InsertionSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
 {
@@ -476,7 +476,7 @@ void InsertionSortComparison(int* arr, int N, long long& count_assign, long long
 	}
 }
 
-void InsertionSortTime(int* arr, int N, chrono::milliseconds& time)
+void InsertionSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 
@@ -496,7 +496,7 @@ void InsertionSortTime(int* arr, int N, chrono::milliseconds& time)
 	}
 
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }
 void ShellSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
 {
@@ -523,7 +523,7 @@ void ShellSortComparison(int* arr, int N, long long& count_assign, long long& co
 		}
 	}
 }
-void ShellSortTime(int* arr, int N, chrono::milliseconds& time)
+void ShellSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 
@@ -542,7 +542,7 @@ void ShellSortTime(int* arr, int N, chrono::milliseconds& time)
 	}
 
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }
 // Heap Sort
 void heapifyComparison(int* arr, int N, int i, long long& count_assign, long long& count_compare)
@@ -632,7 +632,7 @@ void heapifyTime(int* arr, int N, int i)
 	}
 }
 // Heap Sort main function
-void HeapSortTime(int* arr, int N, chrono::milliseconds& time)
+void HeapSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 	// Build heap
@@ -650,7 +650,7 @@ void HeapSortTime(int* arr, int N, chrono::milliseconds& time)
 		heapifyTime(arr, i, 0);
 	}
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }
 
 // Comparison
@@ -776,12 +776,12 @@ void _QuickSort(int* arr, int start, int end)
 	// Sorting the right part
 	_QuickSort(arr, p + 1, end);
 }
-void QuickSortTime(int* arr, int N, chrono::milliseconds& time)
+void QuickSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 	_QuickSort(arr, 0, N - 1);
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }
 // Comparison
 void SelectionSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
@@ -807,7 +807,7 @@ void SelectionSortComparison(int* arr, int N, long long& count_assign, long long
 	return;
 }
 // Time
-void SelectionSortTime(int* arr, int N, chrono::milliseconds& time)
+void SelectionSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 	int minpos;
@@ -820,7 +820,7 @@ void SelectionSortTime(int* arr, int N, chrono::milliseconds& time)
 		swap(arr[minpos], arr[i]);
 	}
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 	return;
 }
 void ShakerSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
@@ -856,7 +856,7 @@ void ShakerSortComparison(int* arr, int N, long long& count_assign, long long& c
 		left = mark_step; count_assign++; // start from the mark_step
 	}
 }
-void ShakerSortTime(int* arr, int N, chrono::milliseconds& time)
+void ShakerSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 	int left = 0; // the first of arr;
@@ -886,7 +886,7 @@ void ShakerSortTime(int* arr, int N, chrono::milliseconds& time)
 		left = mark_step; // start from the mark_step
 	}
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }
 void Find_Max_Min(int* arr, int N, int& max, int& min, long long& count_assign, long long& count_compare)
 {
@@ -1063,14 +1063,14 @@ void InsertionSort(int* arr, int N, int* bucket)
 		ShiftValue(arr, N, i);
 	}
 }
-void FlashSortTime(int* arr, int N, chrono::milliseconds& time)
+void FlashSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 	int* bucket;
 	if (N <= 1)
 	{
 		auto finish = chrono::steady_clock::now();
-		time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+		time = chrono::duration_cast<chrono::microseconds>(finish - start);
 		return;
 	}
 	if (N == 2)
@@ -1080,7 +1080,7 @@ void FlashSortTime(int* arr, int N, chrono::milliseconds& time)
 			swap(arr[0], arr[1]);
 		}
 		auto finish = chrono::steady_clock::now();
-		time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+		time = chrono::duration_cast<chrono::microseconds>(finish - start);
 		return;
 	}
 	int max, min;
@@ -1088,7 +1088,7 @@ void FlashSortTime(int* arr, int N, chrono::milliseconds& time)
 	if (max == min)
 	{
 		auto finish = chrono::steady_clock::now();
-		time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+		time = chrono::duration_cast<chrono::microseconds>(finish - start);
 		return;
 	}
 	Classify_Element(arr, N, max, min, bucket);
@@ -1096,5 +1096,5 @@ void FlashSortTime(int* arr, int N, chrono::milliseconds& time)
 	InsertionSort(arr, N, bucket);
 	delete[] bucket;
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }

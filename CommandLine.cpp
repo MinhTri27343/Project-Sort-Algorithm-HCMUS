@@ -51,9 +51,9 @@ long long getComparisonSortAlgorithm(int idxAlgorithmName, int* arr, int n)
 	}
 	return count_compare;
 }
-chrono::milliseconds getTimeSortAlgorithm(int idxAlgorithmName, int* arr, int n)
+chrono::microseconds getTimeSortAlgorithm(int idxAlgorithmName, int* arr, int n)
 {
-	chrono::milliseconds time;
+	chrono::microseconds time;
 	switch (idxAlgorithmName)
 	{
 	case 0:
@@ -269,7 +269,7 @@ void getIndexComparisonMode(int argc, char* argv[], int& idxAlgorithmName1, int&
 		}
 	}
 }
-void printOutputParameter(int idxOutputParameter, chrono::milliseconds& time, long long& comparision)
+void printOutputParameter(int idxOutputParameter, chrono::microseconds& time, long long& comparision)
 {
 	switch (idxOutputParameter)
 	{
@@ -280,7 +280,7 @@ void printOutputParameter(int idxOutputParameter, chrono::milliseconds& time, lo
 		cout << "Comparisions: " << comparision;
 		break;
 	case 2:
-		cout << "Running Time: " << time.count() << endl;
+		cout << "Running Time: " << (double)time.count() / 1000 << endl;
 		cout << "Comparisions: " << comparision << endl;
 		break;
 	default:
@@ -337,7 +337,7 @@ bool isCommandLine1(int argc, char* argv[])
 // 	int inputSize = 0;
 // 	readFile(fileName, arr, inputSize);
 // 	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
-// 	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+// 	chrono::microseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
 
 
 // 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
@@ -362,7 +362,7 @@ void implementCommandLine1(string fileName, int argc, char* argv[])
 	CopyValue(arr1_time, arr, inputSize);
 	CopyValue(arr1_compare, arr, inputSize);
 	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr1_compare, inputSize);
-	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr1_time, inputSize);
+	chrono::microseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr1_time, inputSize);
 
 
 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
@@ -397,7 +397,7 @@ bool isCommandLine2(int argc, char* argv[])
 // 	GenerateData(arr, inputSize, idxInputOrder);
 // 	writeFile("input.txt", arr, inputSize);
 // 	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
-// 	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
+// 	chrono::microseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr, inputSize);
 
 // 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
 // 	cout << "Input size: " << inputSize << endl;
@@ -435,7 +435,7 @@ void implementCommandLine2(int argc, char* argv[])
 	CopyValue(arr1_time, arr, inputSize);
 	CopyValue(arr1_compare, arr, inputSize);
 	long long comparison = getComparisonSortAlgorithm(idxAlgorithmName, arr1_compare, inputSize);
-	chrono::milliseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr1_time, inputSize);
+	chrono::microseconds time = getTimeSortAlgorithm(idxAlgorithmName, arr1_time, inputSize);
 
 	cout << "Algorithm: " << getNameSortAlgorithm(idxAlgorithmName) << endl;
 	cout << "Input size: " << inputSize << endl;
@@ -467,7 +467,7 @@ void implementCommandLine3(int argc, char* argv[])
 		string fileName = "input_" + to_string(i + 1) + ".txt";
 		writeFile(fileName, arr, inputSize);
 
-		chrono::milliseconds time;
+		chrono::microseconds time;
 		long long count_compare = getComparisonSortAlgorithm(idxAlgorithmName, arr, inputSize);
 		printOutputParameter(idxOutputParameter, time, count_compare);
 		cout << endl << endl;
@@ -507,13 +507,13 @@ void implementCommandLine4(int argc, char* argv[])
 	cout << "Input size: " << size << endl;
 	cout << "--------------------------------------" << endl;
 
-	chrono::milliseconds time1 = getTimeSortAlgorithm(idxAlgorithmName1, arr1_time, size);
-	chrono::milliseconds time2 = getTimeSortAlgorithm(idxAlgorithmName2, arr2_time, size);
+	chrono::microseconds time1 = getTimeSortAlgorithm(idxAlgorithmName1, arr1_time, size);
+	chrono::microseconds time2 = getTimeSortAlgorithm(idxAlgorithmName2, arr2_time, size);
 
 	long long count_compare1 = getComparisonSortAlgorithm(idxAlgorithmName1, arr1_comp, size);
 	long long count_compare2 = getComparisonSortAlgorithm(idxAlgorithmName2, arr2_comp, size);
 
-	cout << "Running time: " << time1.count() << " | " << time2.count() << endl;
+	cout << "Running time: " << (double)time1.count() / 1000 << " | " << (double)time2.count() / 1000 << endl;
 	cout << "Comparisons: " << count_compare1 << " | " << count_compare2 << endl << endl;
 	delete[] arr1_comp;
 	delete[] arr2_comp;
@@ -551,13 +551,13 @@ void implementCommandLine5(int argc, char* argv[])
 	CopyValue(arr1_compare, arr1_time, size);
 	CopyValue(arr2_compare, arr1_time, size);
 
-	chrono::milliseconds time1 = getTimeSortAlgorithm(idxAlgorithmName1, arr1_time, size);
-	chrono::milliseconds time2 = getTimeSortAlgorithm(idxAlgorithmName2, arr2_time, size);
+	chrono::microseconds time1 = getTimeSortAlgorithm(idxAlgorithmName1, arr1_time, size);
+	chrono::microseconds time2 = getTimeSortAlgorithm(idxAlgorithmName2, arr2_time, size);
 
 	long long count_compare1 = getComparisonSortAlgorithm(idxAlgorithmName1, arr1_compare, size);
 	long long count_compare2 = getComparisonSortAlgorithm(idxAlgorithmName2, arr2_compare, size);
 
-	cout << "Running time: " << time1.count() << " | " << time2.count() << endl;
+	cout << "Running time: " << (double)time1.count() / 1000 << " | " << (double)time2.count() / 1000 << endl;
 	cout << "Comparisons: " << count_compare1 << " | " << count_compare2 << endl;
 	delete[] arr1_time;
 	delete[] arr2_time;
