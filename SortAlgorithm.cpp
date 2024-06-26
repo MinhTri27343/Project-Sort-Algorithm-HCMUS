@@ -653,15 +653,15 @@ void HeapSortTime(int* arr, int N, chrono::microseconds& time)
 	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }
 
-// Comparison
 int partitionComparison(int* arr, int start, int end, long long& count_assign, long long& count_compare)
 {
 	++count_assign;
 	int pivot = arr[start];
+
 	++count_assign;
 	int count = 0;
 	++count_assign;
-	for (int i = start + 1; ++count_compare && i <= end; i++ && ++count_assign) {
+	for (int i = start + 1; i <= end && ++count_compare; i++ && ++count_assign) {
 		if (++count_compare && arr[i] <= pivot)
 		{
 			++count_assign;
@@ -702,28 +702,56 @@ int partitionComparison(int* arr, int start, int end, long long& count_assign, l
 			--j;
 		}
 	}
+
 	return pivotIndex;
 }
-void QuickSort(int* arr, int start, int end, long long& count_assign, long long& count_compare)
+void _QuickSort(int* arr, int start, int end, long long& count_assign, long long& count_compare)
 {
+	// Create a stack 
+	int *stack = new int [end - start + 1];
 
-	// base case
-	if (++count_compare && start >= end)
-		return;
-
-	// partitioning the array
+	// initialize top of stack 
 	++count_assign;
-	int p = partitionComparison(arr, start, end, count_assign, count_compare);
+	int top = -1;
 
-	// Sorting the left part
-	QuickSort(arr, start, p - 1, count_assign, count_compare);
+	// push initial values of start and end to stack 
+	count_assign += 4;
+	stack[++top] = start;
+	stack[++top] = end;
 
-	// Sorting the right part
-	QuickSort(arr, p + 1, end, count_assign, count_compare);
+	// Keep popping from stack while it is not empty 
+	while (++count_compare && top >= 0) {
+		// Pop start and end
+		count_assign += 4;
+		end = stack[top--];
+		start = stack[top--];
+
+		// Set pivot element at its correct position 
+		// in sorted array 
+		++count_assign;
+		int p = partitionComparison(arr, start, end, count_assign, count_compare);
+
+		// If there are elements on left side of pivot, 
+		// then push left side to stack 
+		if (++count_compare && p - 1 > start) {
+			count_assign += 4;
+			stack[++top] = start;
+			stack[++top] = p - 1;
+		}
+
+		// If there are elements on right side of pivot, 
+		// then push right side to stack 
+		if (++count_compare && p + 1 < end) {
+			count_assign += 4;
+			stack[++top] = p + 1;
+			stack[++top] = end;
+		}
+	}
+	delete[] stack;
 }
 void QuickSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
 {
-	QuickSort(arr, 0, N - 1, count_assign, count_compare);
+	_QuickSort(arr, 0, N - 1, count_assign, count_compare);
 }
 
 int partitionTime(int* arr, int start, int end)
@@ -761,25 +789,48 @@ int partitionTime(int* arr, int start, int end)
 
 	return pivotIndex;
 }
-void _QuickSort(int* arr, int start, int end)
+void QuickSort(int* arr, int start, int end)
 {
-	// base case
-	if (start >= end)
-		return;
+	// Create a stack 
+	int *stack = new int [end - start + 1];
 
-	// partitioning the array
-	int p = partitionTime(arr, start, end);
+	// initialize top of stack 
+	int top = -1;
 
-	// Sorting the left part
-	_QuickSort(arr, start, p - 1);
+	// push initial values of start and end to stack 
+	stack[++top] = start;
+	stack[++top] = end;
 
-	// Sorting the right part
-	_QuickSort(arr, p + 1, end);
+	// Keep popping from stack while it is not empty 
+	while (top >= 0) {
+		// Pop start and end
+		end = stack[top--];
+		start = stack[top--];
+
+		// Set pivot element at its correct position 
+		// in sorted array 
+		int p = partitionTime(arr, start, end);
+
+		// If there are elements on left side of pivot, 
+		// then push left side to stack 
+		if (p - 1 > start) {
+			stack[++top] = start;
+			stack[++top] = p - 1;
+		}
+
+		// If there are elements on right side of pivot, 
+		// then push right side to stack 
+		if (p + 1 < end) {
+			stack[++top] = p + 1;
+			stack[++top] = end;
+		}
+	}
+	delete[] stack;
 }
 void QuickSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
-	_QuickSort(arr, 0, N - 1);
+	QuickSort(arr, 0, N - 1);
 	auto finish = chrono::steady_clock::now();
 	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }

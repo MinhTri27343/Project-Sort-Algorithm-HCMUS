@@ -370,7 +370,7 @@ void implementCommandLine1(string fileName, int argc, char* argv[])
 	cout << "Input size: " << inputSize << endl;
 	cout << "--------------------------------\n";
 	printOutputParameter(idxOutputParameter, time, comparison);
-	writeFile("output.txt", arr, inputSize);
+	writeFile("output.txt", arr1_compare, inputSize);
 	delete[] arr;
 }
 
@@ -442,7 +442,7 @@ void implementCommandLine2(int argc, char* argv[])
 	cout << "Input order: " << getNameInputOrder(idxInputOrder) << endl;
 	cout << "--------------------------------------\n";
 	printOutputParameter(idxOutputParameter, time, comparison);
-	writeFile("output.txt", arr, inputSize);
+	writeFile("output.txt", arr1_compare, inputSize);
 	delete[] arr;
 }
 
