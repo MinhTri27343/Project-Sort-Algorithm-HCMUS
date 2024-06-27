@@ -421,7 +421,7 @@ void CountingSortComparison(int* arr, int N, long long& count_assign, long long&
 	delete[] count;
 }
 
-void CountingSortTime(int* arr, int N, chrono::milliseconds& time)
+void CountingSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 
