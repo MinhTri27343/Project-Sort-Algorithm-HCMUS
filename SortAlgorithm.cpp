@@ -368,46 +368,50 @@ void CountingSortComparison(int* arr, int N, long long& count_assign, long long&
 
 	// Find the largest and smallest element of the array 
 	// to find the range of the count array
-	int max = arr[0]; ++count_assign;
-	int min = arr[0]; ++count_assign;
-	for (int i = 1 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
+	int max = 0; ++count_assign;
+	int min = INT_MAX; ++count_assign;
+	++count_assign;
+	for (int i = 0; ++count_compare && i < N; i++, ++count_assign)
 	{
 		if (++count_compare && arr[i] > max)
 		{
 			max = arr[i]; ++count_assign;
 		}
-
-		else if (++count_compare && arr[i] < max)
+		else if (++count_compare && arr[i] < min)
 		{
 			min = arr[i]; ++count_assign;
 		}
 	}
 
 	// Initialize the counting array with 0
-	int range = max - min + 1; ++count_assign;
+	int range = max - min + 1;
 	int* count = new int[range] {0}; count_assign += range;
 
 	// Store count of occurrences in count[]
-	for (int i = 0 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
+	++count_assign;
+	for (int i = 0; ++count_compare && i < N; i++, ++count_assign)
 	{
 		count[arr[i] - min]++; ++count_assign;
 	}
 
 	// Store the cummulative count
-	for (int i = 1 && ++count_assign; ++count_compare && i < range; i++ && ++count_assign)
+	++count_assign;
+	for (int i = 1; ++count_compare && i < range; i++, ++count_assign)
 	{
 		count[i] += count[i - 1]; ++count_assign;
 	}
 
 	// Place the elements in sorted order
-	for (int i = N - 1 && ++count_assign; ++count_compare && i >= 0; i-- && ++count_assign)
+	++count_assign;
+	for (int i = N - 1; ++count_compare && i >= 0; i--, ++count_assign)
 	{
 		output[count[arr[i] - min] - 1] = arr[i]; ++count_assign;
 		count[arr[i] - min]--; ++count_assign;
 	}
 
 	// Copy from temporary array to original array
-	for (int i = 0 && ++count_assign; ++count_compare && i < N; i++ && ++count_assign)
+	++count_assign;
+	for (int i = 0; ++count_compare && i < N; i++, ++count_assign)
 	{
 		arr[i] = output[i]; ++count_assign;
 	}
@@ -417,19 +421,19 @@ void CountingSortComparison(int* arr, int N, long long& count_assign, long long&
 	delete[] count;
 }
 
-void CountingSortTime(int* arr, int N, chrono::microseconds& time)
+void CountingSortTime(int* arr, int N, chrono::milliseconds& time)
 {
 	auto start = chrono::steady_clock::now();
 
 	int* output = new int[N];
 
-	int max = arr[0];
-	int min = arr[0];
-	for (int i = 1; i < N; i++)
+	int max = 0;
+	int min = INT_MAX;
+	for (int i = 0; i < N; i++)
 	{
 		if (arr[i] > max)
 			max = arr[i];
-		else if (arr[i] < max)
+		else if (arr[i] < min)
 			min = arr[i];
 	}
 
@@ -455,7 +459,7 @@ void CountingSortTime(int* arr, int N, chrono::microseconds& time)
 	delete[] count;
 
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::microseconds>(finish - start);
+	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
 }
 void InsertionSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
 {
