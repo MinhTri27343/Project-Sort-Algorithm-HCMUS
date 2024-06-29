@@ -746,7 +746,6 @@ void _QuickSort(int* arr, int start, int end, long long& count_assign, long long
 			stack[++top] = end;
 		}
 	}
-	delete[] stack;
 }
 void QuickSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
 {
