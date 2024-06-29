@@ -790,8 +790,6 @@ int partitionTime(int* arr, int start, int end)
 }
 void QuickSort(int* arr, int start, int end)
 {
-	// Create a stack 
-	int *stack = new int [end - start + 1];
 
 	// initialize top of stack 
 	int top = -1;
@@ -971,19 +969,17 @@ void FlashSortComparison(int* arr, int N, long long& count_assign, long long& co
 	if (++count_compare && max == min) return;
 	//Step 1: Classify
 	int num_bucket = 0.45 * N; count_assign++; // 0.45 is the constant
-#define getK(x) 1ll * (num_bucket - 1) * (x - min) / (max - min) //count the order of bucket by following formula.
-
 	//Initialize buckets.
 	count_assign += num_bucket;
 	for (int i = 0; i < num_bucket; i++)
 	{
 		bucket[i] = 0;
 	}
-
 	count_assign++;
 	for (int i = 0; count_compare++, i < N; i++, ++count_assign)
 	{
-		bucket[getK(arr[i])] += 1; count_assign += 2; // if element in bucket, the number of element in bucket plus 1
+		int k = 1ll * (num_bucket - 1) * (arr[i] - min) / (max - min); count_assign++;
+		bucket[k] += 1; count_assign++; // if element in bucket, the number of element in bucket plus 1
 	}
 	count_assign++;
 	for (int i = 1; count_compare++, i < num_bucket; i++, ++count_assign)
@@ -997,16 +993,16 @@ void FlashSortComparison(int* arr, int N, long long& count_assign, long long& co
 	// Permutate all the element into the correct bucket.
 	while (++count_compare && count < N)
 	{
-		int k = getK(arr[i]); count_assign += 2; // find index of bucket
+		int k = 1ll * (num_bucket - 1) * (arr[i] - min) / (max - min); count_assign++;
 		while (++count_compare && i >= bucket[k]) // If the bucket is full. Shift the index + 1.
 		{
 			i++; count_assign++;
-			k = getK(arr[i]); count_assign += 2;
+			k = 1ll * (num_bucket - 1) * (arr[i] - min) / (max - min); count_assign++;
 		}
 		int value = arr[i]; count_assign++; // save the value.
 		while (++count_compare && i != bucket[k])
 		{
-			k = getK(value); count_assign += 2;
+			k = 1ll * (num_bucket - 1) * (value - min) / (max - min); count_assign++;
 			swap(arr[bucket[k] - 1], value); count_assign += 3; // change arr[bucket[k] - 1] = value, and value = arr[bucket[k] - 1];
 			bucket[k]--; count_assign++; // decrease the nums of bucket by 1. Because adding the value in the bucket.
 			count++; count_assign++;
@@ -1027,28 +1023,11 @@ void FlashSortComparison(int* arr, int N, long long& count_assign, long long& co
 		arr[j + 1] = key; ++count_assign;
 	}
 }
-void ShiftValue(int* arr, int N, int index)
-{
-	int hold = arr[index];
-	int i = index - 1;
-	while (i >= 0 && hold < arr[i])
-	{
-		arr[i + 1] = arr[i];
-		i--;
-	}
-	arr[i + 1] = hold;
-}
-void InsertionSort(int* arr, int N, int* bucket)
-{
-	for (int i = 1; i < N; i++)
-	{
-		ShiftValue(arr, N, i);
-	}
-}
+//Similar to FlashSortComparison.
 void FlashSortTime(int* arr, int N, chrono::microseconds& time)
 {
 	auto start = chrono::steady_clock::now();
-	if (N <= 1) 
+	if (N <= 1)
 	{
 		auto finish = chrono::steady_clock::now();
 		time = chrono::duration_cast<chrono::microseconds>(finish - start);
@@ -1076,7 +1055,7 @@ void FlashSortTime(int* arr, int N, chrono::microseconds& time)
 			min = arr[i];
 		}
 	}
-	if (max == min) 
+	if (max == min)
 	{
 		auto finish = chrono::steady_clock::now();
 		time = chrono::duration_cast<chrono::microseconds>(finish - start);
@@ -1084,7 +1063,6 @@ void FlashSortTime(int* arr, int N, chrono::microseconds& time)
 	}
 	//Step 1: Classify
 	int num_bucket = 0.45 * N;// 0.45 is the constant
-	//#define getK(x) 1ll * (num_bucket - 1) * (x - min) / (max - min)
 	for (int i = 0; i < num_bucket; i++)
 	{
 		bucket[i] = 0;
@@ -1093,37 +1071,38 @@ void FlashSortTime(int* arr, int N, chrono::microseconds& time)
 	for (int i = 0; i < N; i++)
 	{
 		// find index of bucket
-		bucket[getK(arr[i])] += 1; // if element in bucket, the number of element in bucket plus 1
+		int k = 1ll * (num_bucket - 1) * (arr[i] - min) / (max - min);
+		bucket[k] += 1; // if element in bucket, the number of element in bucket plus 1
 	}
 	for (int i = 1; i < num_bucket; i++)
 	{
 		bucket[i] = bucket[i - 1] + bucket[i]; // find the index of the end of each bucket.
 	}
 
-	//Step 2: Permutation
+	//Step 2:
 	int count = 0; // count the number of step
 	int i = 0;
 	// Permutate all the element into the correct bucket.
 	while (count < N)
 	{
-		int k = getK(arr[i]);
+		int k = 1ll * (num_bucket - 1) * (arr[i] - min) / (max - min);
 		/*int k = (int)((num_bucket - 1) * ((float)(arr[i] - min) / (max - min)));*/ // find index of bucket
 		while (i >= bucket[k]) // If the bucket is full. Shift the index + 1.
 		{
 			i++;
-			k = getK(arr[i]);
+			k = 1ll * (num_bucket - 1) * (arr[i] - min) / (max - min);
 		}
 		int value = arr[i];// save the value.
 		while (i != bucket[k])
 		{
-			k = getK(value);
+			k = 1ll * (num_bucket - 1) * (value - min) / (max - min);
 			swap(arr[bucket[k] - 1], value); // change arr[bucket[k] - 1] = value, and value = arr[bucket[k] - 1];
 			bucket[k]--; // decrease the nums of bucket by 1. Because adding the value in the bucket.
 			count++;
 		}
 	}
 
-	//Step 3: Insertion sort
+	//Step 3:
 	for (int i = 1; i < N; i++)
 	{
 		int key = arr[i];
