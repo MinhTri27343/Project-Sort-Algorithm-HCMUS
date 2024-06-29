@@ -1,5 +1,6 @@
 #include"SortAlgorithm.h"
 // Algorithm Bubble Sort
+int stack[500000];
 void BubbleSort(int* arr, int N)
 {
 	for (int i = 0; i < N - 1; i++)
@@ -454,7 +455,7 @@ void CountingSortTime(int* arr, int N, chrono::microseconds& time)
 	delete[] count;
 
 	auto finish = chrono::steady_clock::now();
-	time = chrono::duration_cast<chrono::milliseconds>(finish - start);
+	time = chrono::duration_cast<chrono::microseconds>(finish - start);
 }
 void InsertionSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
 {
@@ -707,7 +708,6 @@ int partitionComparison(int* arr, int start, int end, long long& count_assign, l
 void _QuickSort(int* arr, int start, int end, long long& count_assign, long long& count_compare)
 {
 	// Create a stack 
-	int *stack = new int [end - start + 1];
 
 	// initialize top of stack 
 	++count_assign;
