@@ -821,7 +821,6 @@ void QuickSort(int* arr, int start, int end)
 			stack[++top] = end;
 		}
 	}
-	delete[] stack;
 }
 void QuickSortTime(int* arr, int N, chrono::microseconds& time)
 {
