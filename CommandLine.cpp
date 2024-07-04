@@ -274,7 +274,7 @@ void printOutputParameter(int idxOutputParameter, chrono::microseconds& time, lo
 	switch (idxOutputParameter)
 	{
 	case 0:
-		cout << "Running Time: " << time.count();
+		cout << "Running Time: " << (double)time.count() / 1000;
 		break;
 	case 1:
 		cout << "Comparisions: " << comparision;
