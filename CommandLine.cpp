@@ -290,7 +290,7 @@ void getIndexComparisonMode(int argc, char* argv[], int& idxAlgorithmName1, int&
 	}
 }
 //Print the output of parameter.
-void printOutputParameter(int idxOutputParameter, chrono::microseconds& time, long long& comparision)
+void printOutputParameter(int idxOutputParameter, chrono::microseconds& time, long long& comparison)
 {
 	switch (idxOutputParameter)
 	{
@@ -300,12 +300,12 @@ void printOutputParameter(int idxOutputParameter, chrono::microseconds& time, lo
 		break;
 	//If printing only comparison
 	case 1:
-		cout << "Comparisons: " << comparision;
+		cout << "Comparisons: " << comparison;
 		break;
 	//If printing both
 	case 2:
 		cout << "Running Time: " << (double)time.count() / 1000 << endl;
-		cout << "Comparisons: " << comparision << endl;
+		cout << "Comparisons: " << comparison << endl;
 		break;
 	default:
 		break;
