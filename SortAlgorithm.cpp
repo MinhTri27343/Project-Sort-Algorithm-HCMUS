@@ -164,7 +164,7 @@ void MergeSort(int* arr, int l, int r)
 	MergeSort(arr, m + 1, r);
 	Merge(arr, l, m, r);
 }
-// Merge sort algorithm and count number of comparision
+// Merge sort algorithm and count number of comparison
 void Merge_Sort_Comparison(int* arr, int l, int r, long long& count_assign, long long& count_compare)
 {
 	if (++count_compare && l >= r) return;
@@ -173,7 +173,7 @@ void Merge_Sort_Comparison(int* arr, int l, int r, long long& count_assign, long
 	Merge_Sort_Comparison(arr, m + 1, r, count_assign, count_compare);
 	MergeComparison(arr, l, m, r, count_assign, count_compare);
 }
-// Merge sort algorithm and count number of comparision
+// Merge sort algorithm and count number of comparison
 void MergeSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
 {
 	count_assign = 0;
