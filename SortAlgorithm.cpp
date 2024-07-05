@@ -15,7 +15,7 @@ void BubbleSort(int* arr, int N)
 	}
 }
 
-// Count number of comparisio of bubble sort algorithms
+// Count number of comparison of bubble sort algorithms
 void BubbleSortComparison(int* arr, int N, long long& count_assign, long long& count_compare)
 {
 	count_assign = 0;
@@ -33,7 +33,6 @@ void BubbleSortComparison(int* arr, int N, long long& count_assign, long long& c
 				arr[j + 1] = temp; count_assign++;
 			}
 		}
-		if (++count_compare) return;
 	}
 }
 
